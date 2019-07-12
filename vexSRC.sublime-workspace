@@ -1,0 +1,482 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"in",
+				"include\tDeviot include syslib"
+			],
+			[
+				"ana",
+				"analogWrite\tDeviot analogWrite"
+			],
+			[
+				"digi",
+				"digitalWrite\tDeviot digitalWrite"
+			],
+			[
+				"C",
+				"CW"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"CW",
+				"CW"
+			],
+			[
+				"right",
+				"rightMotorCW"
+			],
+			[
+				"O",
+				"on"
+			],
+			[
+				"for",
+				"forward"
+			],
+			[
+				"leftMotorCW",
+				"leftMotorCW"
+			],
+			[
+				"sens",
+				"sensorPin"
+			],
+			[
+				"set",
+				"setMotor"
+			],
+			[
+				"le",
+				"leftMotor2"
+			],
+			[
+				"moto",
+				"leftMotor1"
+			],
+			[
+				"mo",
+				"motorPin"
+			],
+			[
+				"motor",
+				"motorpin"
+			],
+			[
+				"ba",
+				"background-repeat\tproperty"
+			],
+			[
+				"mar",
+				"margin-top\tproperty"
+			],
+			[
+				"text",
+				"text-decoration\tproperty"
+			],
+			[
+				"bo",
+				"border-radius\tproperty"
+			],
+			[
+				"magin",
+				"margin-right\tproperty"
+			],
+			[
+				"l",
+				"li\tTag"
+			],
+			[
+				"a",
+				"a\tTag"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"s",
+				"section\tTag"
+			],
+			[
+				"he",
+				"header\tTag"
+			],
+			[
+				"con",
+				"control"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main/main.ino",
+			"settings":
+			{
+				"buffer_size": 756,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/motor.h",
+			"settings":
+			{
+				"buffer_size": 775,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/sensor.h",
+			"settings":
+			{
+				"buffer_size": 529,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"devio",
+				"Deviot: Select Board"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"ma",
+				"Activate Materialize Theme"
+			],
+			[
+				"mater",
+				"Activate Materialize Theme"
+			],
+			[
+				"lis",
+				"Package Control: List Packages"
+			],
+			[
+				"isn",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"a",
+				"Activate Materialize Theme"
+			],
+			[
+				"Package",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 136.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC/assets",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC/main"
+	],
+	"file_history":
+	[
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Programs/iTEST/motorActivity/motorActivity.ino",
+		"/Users/k084/Desktop/f.ino",
+		"/Users/k084/Documents/Arduino/libraries/L298N-1.1.0/src/L298N.h",
+		"/Users/k084/Documents/Arduino/libraries/L298N-1.1.0/src/L298N.cpp",
+		"/Users/k084/Desktop/activity.ino",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC/main/robot.h",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC/main/main.ino",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC/main/mian.ino",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/arduino_sketch/arduino_sketch.ino",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/Page/contacts.html",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/Page/locations.html",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/Page/index.html",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/Page/main.css",
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/SpiderBot/Face/128x64_spi/128x64_spi.ino",
+		"/Users/k084/Desktop/128x64_spi/128x64_spi.ino",
+		"/Users/k084/Documents/Backup/Code Green/SpiderBot/SpiderBotLink.txt",
+		"/Users/k084/Desktop/repl.js"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"driveTime"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main/main.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 756,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								576,
+								576
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 244.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main/motor.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 775,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								630,
+								630
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 21.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "main/sensor.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 529,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67,
+								67
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 66.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.deviot":
+	{
+		"height": 144.0
+	},
+	"output.exec":
+	{
+		"height": 138.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.stino_build_panel":
+	{
+		"height": 138.0
+	},
+	"output.stino_panel":
+	{
+		"height": 167.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"main/main.ino"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
