@@ -119,7 +119,7 @@
 			"file": "main/main.ino",
 			"settings":
 			{
-				"buffer_size": 756,
+				"buffer_size": 715,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -128,7 +128,7 @@
 			"file": "main/motor.h",
 			"settings":
 			{
-				"buffer_size": 775,
+				"buffer_size": 756,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -220,9 +220,6 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC",
-		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC/assets",
-		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC/main"
 	],
 	"file_history":
 	[
@@ -284,12 +281,40 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
 					"file": "main/main.ino",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 715,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								683,
+								683
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 100.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main/motor.h",
 					"semi_transient": false,
 					"settings":
 					{
@@ -300,36 +325,8 @@
 						"selection":
 						[
 							[
-								576,
-								576
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 244.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "main/motor.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 775,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								630,
-								630
+								0,
+								0
 							]
 						],
 						"settings":
@@ -338,10 +335,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 21.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -371,7 +368,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
