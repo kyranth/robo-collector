@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"Ul",
+				"ultrasonicVal"
+			],
+			[
+				"ul",
+				"ultrasonicRead"
+			],
+			[
+				"sen",
+				"sensor"
+			],
+			[
+				"st",
+				"stop"
+			],
+			[
+				"dir",
+				"driveSpeed"
+			],
+			[
+				"tur",
+				"turnAngle"
+			],
+			[
 				"in",
 				"include\tDeviot include syslib"
 			],
@@ -119,8 +143,24 @@
 			"file": "main/main.ino",
 			"settings":
 			{
-				"buffer_size": 715,
+				"buffer_size": 861,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/robot.h",
+			"settings":
+			{
+				"buffer_size": 241,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/robot.cpp",
+			"settings":
+			{
+				"buffer_size": 70,
 				"line_ending": "Unix"
 			}
 		},
@@ -128,8 +168,15 @@
 			"file": "main/motor.h",
 			"settings":
 			{
-				"buffer_size": 756,
-				"encoding": "UTF-8",
+				"buffer_size": 324,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/motor.cpp",
+			"settings":
+			{
+				"buffer_size": 798,
 				"line_ending": "Unix"
 			}
 		},
@@ -137,8 +184,16 @@
 			"file": "main/sensor.h",
 			"settings":
 			{
-				"buffer_size": 529,
+				"buffer_size": 280,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main/sensor.cpp",
+			"settings":
+			{
+				"buffer_size": 351,
 				"line_ending": "Unix"
 			}
 		}
@@ -220,9 +275,17 @@
 	},
 	"expanded_folders":
 	[
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC",
+		"/Users/k084/Documents/Repositories/iTEST/VexSRC",
+		"/Users/k084/Documents/Repositories/iTEST/VexSRC/assets",
+		"/Users/k084/Documents/Repositories/iTEST/VexSRC/assets/IRRemote",
+		"/Users/k084/Documents/Repositories/iTEST/VexSRC/main"
 	],
 	"file_history":
 	[
+		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Files/Projects/Res/IRRemote/IRRemote.ino",
+		"/Users/k084/Documents/Repositories/iTEST/VexSRC/main/motor.h",
+		"/Users/k084/Desktop/IR Sensor/IRSensor.ino",
 		"/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Programs/iTEST/motorActivity/motorActivity.ino",
 		"/Users/k084/Desktop/f.ino",
 		"/Users/k084/Documents/Arduino/libraries/L298N-1.1.0/src/L298N.h",
@@ -276,6 +339,9 @@
 	[
 		{
 			"path": "/Users/k084/Library/Mobile Documents/com~apple~CloudDocs/Code Green/VexSRC"
+		},
+		{
+			"path": "/Users/k084/Documents/Repositories/iTEST/VexSRC"
 		}
 	],
 	"groups":
@@ -290,15 +356,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 715,
+						"buffer_size": 861,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								683,
-								683
+								227,
+								227
 							]
 						],
 						"settings":
@@ -306,7 +372,7 @@
 							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 100.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -314,11 +380,67 @@
 				},
 				{
 					"buffer": 1,
-					"file": "main/motor.h",
+					"file": "main/robot.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 756,
+						"buffer_size": 241,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								237,
+								237
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "main/robot.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 70,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								70,
+								70
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "main/motor.h",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 324,
 						"regions":
 						{
 						},
@@ -331,31 +453,61 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "main/sensor.h",
+					"buffer": 4,
+					"file": "main/motor.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 529,
+						"buffer_size": 798,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								67,
-								67
+								110,
+								110
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "main/sensor.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 280,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								228,
+								228
 							]
 						],
 						"settings":
@@ -368,7 +520,35 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "main/sensor.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 351,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								325,
+								325
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Deviot (Arduino IDE)/deviot.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
