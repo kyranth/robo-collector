@@ -4,5 +4,5 @@
 #include "Arduino.h"
 
 robot::robot(){
-  Serial.println("Robot Ready");
+	Serial.println("Robot Ready");
 }

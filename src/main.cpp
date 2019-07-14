@@ -15,12 +15,16 @@ motor rightMotor(6, 5);
 void robotForward(int driveSpeed, int driveTime) {
   leftMotor.forward(driveSpeed);
   rightMotor.backward(driveSpeed);
-  delay(driveTime); }
+  delay(driveTime);
+  Serial.println("---forward executed---");
+  delay(10);}
 
 void robotBackward(int driveSpeed, int driveTime) {
   leftMotor.backward(driveSpeed);
   rightMotor.forward(driveSpeed);
-  delay(driveTime); }
+  delay(driveTime);
+  Serial.println("---backward executed---");
+  delay(10); }
 
 void turnLeft(int turnAngle) {
   leftMotor.forward(240);
