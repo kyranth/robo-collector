@@ -1,14 +1,13 @@
 
-#include "Arduino.h"
 
 class motor {
   private:
-    byte _CW;
-    byte _CCW;
+    int _CW;
+    int _CCW;
 
   public:
     // public members
-    motor(byte CW, byte CCW);
+    motor(int CW, int CCW);
 
     // backward is CW - LOW, CCW - driveSpeed
     void backward(int driveSpeed);

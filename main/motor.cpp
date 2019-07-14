@@ -1,7 +1,6 @@
-#include "Arduino.h"
 #include "motor.h"
 
-motor::motor(byte CW, byte CCW) {
+motor::motor(int CW, int CCW) {
   // _CW - inuput = defined variable
   _CW = CW;
   _CCW = CCW;

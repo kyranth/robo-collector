@@ -1,4 +1,5 @@
 //#include "sensor.h"
+//#include "Arduino.h"
 //
 //sensor::sensor(byte sensorPin) {
 //  _sensorPin = sensorPin;

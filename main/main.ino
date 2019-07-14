@@ -12,7 +12,6 @@ motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
 
 
-
 void robotForward(int driveSpeed, int driveTime) {
   leftMotor.forward(driveSpeed);
   rightMotor.backward(driveSpeed);
@@ -40,7 +39,6 @@ void setup () {
 
 void loop() {
   robotForward(255, 1000);
-
 
 }
 

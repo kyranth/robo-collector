@@ -1,5 +1,6 @@
 #include "motor.h"
 #include "sensor.h"
+#include "Arduino.h"
 
 class robot {
 private:
