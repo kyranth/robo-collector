@@ -1,13 +1,15 @@
 
+#ifndef MOTOR_H
+#define MOTOR_H
 
 class motor {
   private:
-    int _CW;
-    int _CCW;
+    int CW;
+    int CCW;
 
   public:
     // public members
-    motor(int CW, int CCW);
+    motor(int _CW, int _CCW);
 
     // backward is CW - LOW, CCW - driveSpeed
     void backward(int driveSpeed);
@@ -18,3 +20,5 @@ class motor {
     void stop();
 
 };
+
+#endif

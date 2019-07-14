@@ -8,10 +8,10 @@
 //}
 //
 //void sensor::ultrasonicRead(byte sensorPin) {
-//	_sensorPin = ultrasonicPin;
-//	int ultrasonicVal = analogRead(_sensorPin);
-//	Serial.println("ultrasonicVal: ");
-//	Serial.println(ultrasonicVal);
-//	delay(200);
+//  _sensorPin = ultrasonicPin;
+//  int ultrasonicVal = analogRead(_sensorPin);
+//  Serial.println("ultrasonicVal: ");
+//  Serial.println(ultrasonicVal);
+//  delay(200);
 //
 //  }
