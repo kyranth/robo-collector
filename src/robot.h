@@ -7,6 +7,7 @@ private:
 
 public:
 	robot();
+	void begin();
 	void robotForward(int driveSpeed, int driveTime);
 	void robotBackward(int driveSpeed, int driveTime);
 	void turnLeft(int turnAngle);

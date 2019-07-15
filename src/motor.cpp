@@ -1,7 +1,7 @@
 #include "motor.h"
 #include "Arduino.h"
 
-motor::motor(int _CW, int _CCW) {
+motor::motor(int CW, int CCW) {
   // _CW - inuput = defined variable
   _CW = CW;
   _CCW = CCW;
@@ -10,24 +10,24 @@ motor::motor(int _CW, int _CCW) {
 }
 
 void motor::backward(int driveSpeed) {
-  analogWrite(CW, LOW);
-  analogWrite(CCW, driveSpeed);
+  analogWrite(_CW, LOW);
+  analogWrite(_CCW, driveSpeed);
   //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
   //Serial.println("---backward executed---");
   //delay(10);
 }
 
 void motor::forward(int driveSpeed) {
-  analogWrite(CW, driveSpeed);
-  analogWrite(CCW, LOW);
+  analogWrite(_CW, driveSpeed);
+  analogWrite(_CCW, LOW);
   //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
   //Serial.println("---forward executed---");
   //delay(10);
 }
 
 void motor::stop() {
-  analogWrite(CW, LOW);
-  analogWrite(CCW, LOW);
+  analogWrite(_CW, LOW);
+  analogWrite(_CCW, LOW);
   //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
   //Serial.println("---stopped---");
   //delay(10);
