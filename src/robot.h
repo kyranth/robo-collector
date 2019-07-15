@@ -12,4 +12,5 @@ public:
 	void robotBackward(int driveSpeed, int driveTime);
 	void turnLeft(int turnAngle);
 	void turnRight(int turnAngle);
+	void manualControl();
 };

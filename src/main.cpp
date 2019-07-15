@@ -1,5 +1,5 @@
 /*
-    JEFF BOB THE 3RD
+    JEFF BOB THE 3RD(Clawbot)
     License: iTEST NYU Robotis Course
     TEAM: {
       Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
@@ -11,7 +11,6 @@
     Right Motor(6, 6)   centerColorSensor(12)   IRSensor()
     RGB Led(2, 3, 4)    
 
-
  */
 
 
@@ -20,7 +19,7 @@
 #include "sensor.h"
 #include "robot.h"
 
-int defualtSpeed = 100;
+int defualtSpeed = 80;
 
 int sensorleft = 11;
 int sensorcenter = 12;
@@ -29,7 +28,11 @@ int leftS = 1;
 int centerS = 1;
 int rightS = 1;
 
-const byte RECV_PIN = 4;
+int redPin = 3;
+int greenPin = 4;
+int bluePin = 2;
+
+const byte RECV_PIN = 7;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 unsigned long key_value = 0;
@@ -41,15 +44,17 @@ motor rightMotor(6, 5);
 
 void robotForward(int driveSpeed) {
   leftMotor.forward(driveSpeed);
-  rightMotor.backward(driveSpeed);
-  Serial.println("---forward executed---");
-  delay(10);}
+  rightMotor.forward(driveSpeed);
+  // Serial.println("---forward executed---");
+  // delay(10);
+  }
 
 void robotBackward(int driveSpeed) {
   leftMotor.backward(driveSpeed);
-  rightMotor.forward(driveSpeed);
-  Serial.println("---backward executed---");
-  delay(10); }
+  rightMotor.backward(driveSpeed);
+  // Serial.println("---backward executed---");
+  // delay(10); 
+  }
 
 void turnLeft(int turnAngle) {
   leftMotor.forward(240);
@@ -61,6 +66,18 @@ void turnRight(int turnAngle) {
   rightMotor.backward(240);
   delay(turnAngle); }
 
+void setColor(int redValue, int greenValue, int blueValue) {
+  analogWrite(redPin, redValue);
+  analogWrite(greenPin, greenValue);
+  analogWrite(bluePin, blueValue); }
+
+void flash() {
+  setColor(0, 200, 0);
+  delay(100);
+  setColor(0, 0, 0);
+  delay(100);
+}
+
 void setup () {
   jeffbobthe3rd.begin();
   pinMode(sensorleft, INPUT);
@@ -70,39 +87,52 @@ void setup () {
 }
 
 void loop() {
-  leftS = digitalRead(sensorleft);
-  Serial.print("leftS: ");
-  Serial.println(leftS);
+	leftS = digitalRead(sensorleft);
+  //Serial.print("leftS: ");
+  //Serial.println(leftS);
   //delay(200);
 
   centerS = digitalRead(sensorcenter);
-  Serial.print("centerS: ");
-  Serial.println(centerS);
+  //Serial.print("centerS: ");
+  //Serial.println(centerS);
   //delay(200);
 
   rightS = digitalRead(sensorright);
-  Serial.print("rightS: ");
-  Serial.println(rightS);
+  //Serial.print("rightS: ");
+  //Serial.println(rightS);
   //delay(200);
   
   if(leftS == 0 && centerS == 1 && rightS == 0) {
     robotForward(defualtSpeed);
-
+    flash();
   } else if(centerS == 1) {
     robotForward(defualtSpeed);
+    flash();
 
   } else if(rightS == 1) {
     leftMotor.forward(defualtSpeed);
+    rightMotor.backward(155);
+    setColor(0, 0, 200);
 
   } else if(leftS == 1) {
+    leftMotor.backward(155);
     rightMotor.forward(defualtSpeed);
+    setColor(0, 0, 200);
 
   } else if(leftS == 0 && centerS == 0 && rightS == 0) {
+    setColor(200, 0, 0);
     leftMotor.forward(defualtSpeed);
     delay(2000);
-    if(leftS == 1 || centerS == 1 || rightS == 1) {
+    if(leftS == 0) {
       leftMotor.stop();
+      rightMotor.stop();
+    } else if(rightS == 0) {
+      leftMotor.stop();
+      rightMotor.stop();
+    } else if(leftS == 1) {
+      rightMotor.forward(defualtSpeed);
+    } else if(rightS == 1) {
+      leftMotor.forward(defualtSpeed);
     }
   }
-
 }

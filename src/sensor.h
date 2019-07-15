@@ -1,19 +1,23 @@
-#include "Arduino.h"
 
-class sensor {
-
- private:
-   // private memebers
-   byte _sensorPin;
-// byte _ultraSonicPin;
-// byte _IRPin;
-// byte _proximityPin;
+// #ifndef SENSOR_H
+// #define SENSOR_H
 
 
- public:
-   // public member
-   sensor(byte sensorPin);
-   void sensorDRead(byte sensorPin);
+// class sensor {
 
-};
+//  private:
+//    // private memebers
+//    int _sensorPin;
+// // byte _ultraSonicPin;
+// // byte _IRPin;
+// // byte _proximityPin;
 
+
+//  public:
+//    // public member
+//    sensor(int sensorPin);
+//    void sensorDRead(int sensorPin);
+
+// };
+
+// #endif
