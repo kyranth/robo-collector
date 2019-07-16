@@ -9,8 +9,8 @@ robot::robot(){}
 void robot::begin(){
 	Serial.begin(9600);
 	Serial.println("Robot Ready");
-	//irrecv.enableIRIn();
-  	//irrecv.blink13(true);
+	// irrecv.enableIRIn();
+  // irrecv.blink13(true);
 }
 /* 
 void robot::manualControl(){

@@ -41,6 +41,8 @@ unsigned long key_value = 0;
 robot jeffbobthe3rd;
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
+motor elbow(A0, A1);
+motor claw(A2, A3);
 
 
 void robotForward(int driveSpeed) {
@@ -87,6 +89,8 @@ void setup () {
 }
 
 void loop() {
+/*
+{  
 	leftS = digitalRead(sensorleft);
   //Serial.print("leftS: ");
   //Serial.println(leftS);
@@ -111,11 +115,11 @@ void loop() {
 
   } else if(rightS == 1) {
     leftMotor.forward(defualtSpeed);
-    rightMotor.backward(defualtSpeed);
+    //rightMotor.backward(defualtSpeed);
     setColor(0, 0, 200);
 
   } else if(leftS == 1) {
-    leftMotor.backward(defualtSpeed);
+    //leftMotor.backward(defualtSpeed);
     rightMotor.forward(defualtSpeed);
     setColor(0, 0, 200);
 
@@ -135,5 +139,11 @@ void loop() {
       leftMotor.forward(defualtSpeed);
     }
   }
+}
+*/
+
+claw.forward(70);
+delay(1000);
+claw.stop();
 
 }
