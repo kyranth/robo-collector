@@ -1,6 +1,7 @@
 /* This code was written for an ITEST activity in which our objective was to automate a robot's response so that it can
    follow a black line in the shape of a square. We mounted sensors on the robot which detected the white and black lines.
 */
+#include <Arduino.h>
 
 int leftmotorPin9CW = 9;
 int leftmotorPin10CCW = 10;
