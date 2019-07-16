@@ -21,6 +21,7 @@
 
 int defualtSpeed = 80;
 
+
 int sensorleft = 11;
 int sensorcenter = 12;
 int sensorright = 13;
@@ -83,7 +84,6 @@ void setup () {
   pinMode(sensorleft, INPUT);
   pinMode(sensorcenter, INPUT);
   pinMode(sensorright, INPUT);
-
 }
 
 void loop() {
@@ -111,11 +111,11 @@ void loop() {
 
   } else if(rightS == 1) {
     leftMotor.forward(defualtSpeed);
-    rightMotor.backward(155);
+    rightMotor.backward(defualtSpeed);
     setColor(0, 0, 200);
 
   } else if(leftS == 1) {
-    leftMotor.backward(155);
+    leftMotor.backward(defualtSpeed);
     rightMotor.forward(defualtSpeed);
     setColor(0, 0, 200);
 
@@ -135,4 +135,5 @@ void loop() {
       leftMotor.forward(defualtSpeed);
     }
   }
+
 }
