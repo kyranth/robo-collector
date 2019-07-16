@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"terminal.integrated.env.osx": {
-			"PATH": "/Users/yanni/.platformio/penv/bin:/Users/yanni/.platformio/penv:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+			"PATH": "/Users/lenakhosrof/.platformio/penv/bin:/Users/lenakhosrof/.platformio/penv:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
 			"PLATFORMIO_CALLER": "vscode"
 		}
 	}
