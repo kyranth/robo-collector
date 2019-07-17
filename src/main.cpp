@@ -58,15 +58,17 @@ void robotBackward(int driveSpeed) {
   // delay(10); 
   }
 
-void turnLeft(int turnAngle) {
-  leftMotor.forward(240);
-  rightMotor.forward(240);
-  delay(turnAngle); }
+void turnLeft() {
+  leftMotor.backward(200);
+  rightMotor.forward(200);
+  // delay(turnAngle); 
+  }
 
-void turnRight(int turnAngle) {
-  leftMotor.backward(240);
-  rightMotor.backward(240);
-  delay(turnAngle); }
+void turnRight() {
+  leftMotor.forward(200);
+  rightMotor.backward(200);
+  //delay(turnAngle); 
+  }
 
 void setColor(int redValue, int greenValue, int blueValue) {
   analogWrite(redPin, redValue);
@@ -110,13 +112,11 @@ void loop() {
     flash();
 
   } else if(rightS == 1 && centerS == 0 && leftS == 0) {
-    leftMotor.forward(defualtSpeed);
-    rightMotor.stop();
+    turnRight();
     setColor(0, 0, 200);
 
   } else if(leftS == 1 && centerS == 0 && rightS == 0) {
-    leftMotor.stop();
-    rightMotor.forward(defualtSpeed);
+    turnLeft();
     setColor(0, 0, 200);
 
   } else if(leftS == 0 && centerS == 0 && rightS == 0) {
@@ -140,4 +140,3 @@ void loop() {
 // claw.forward(70);
 // delay(1000);
 // claw.stop();
-
