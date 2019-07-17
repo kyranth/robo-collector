@@ -96,6 +96,7 @@ void setup()
 void loop() {
   int centimeters = distanceSensor.measureDistanceCm();
   int inches = centimeters / 2.54;
+  
   leftsensor = digitalRead(A2); // Left sensor takes input from Pin 13.
   centersensor = digitalRead(A1);
   rightsensor = digitalRead(A0);
