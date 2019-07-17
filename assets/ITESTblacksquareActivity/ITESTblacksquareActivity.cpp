@@ -24,8 +24,6 @@ void rightturn()
   analogWrite(leftmotorPin10CCW, motorspeed);
   analogWrite(rightmotorPin5CCW, LOW);   
   analogWrite(rightmotorPin6CW, LOW);
-  Serial.println ("clockwise");
-  delay(timedelay);
 }
 
 void leftturn()
@@ -34,9 +32,7 @@ void leftturn()
   analogWrite(rightmotorPin6CW, motorspeed);
   analogWrite(leftmotorPin9CW, LOW);
   analogWrite(leftmotorPin10CCW, LOW);
-  Serial.println("counterClockWise");
-  delay(timedelay);
-  
+
 }
 
 
@@ -47,7 +43,7 @@ void forward(int drivespeed)
   analogWrite(leftmotorPin9CW, LOW);
   analogWrite(rightmotorPin6CW, drivespeed);
   Serial.println("Forward");
-  delay(timedelay);
+
   
 }
 
@@ -69,8 +65,6 @@ void rotate()
   analogWrite(leftmotorPin10CCW, LOW);
   analogWrite(rightmotorPin5CCW, LOW);
   analogWrite(rightmotorPin6CW, motorspeed);
-  Serial.println("rotate");
-  delay(timedelay);
    
    //i recommend using while because the time delay will differ depending on battery life and is called hard coding.
    // the way you have it now, it is too dependent on the arduino going back to that if statement over and over again rather than it 
@@ -101,6 +95,7 @@ void loop() {
   centersensor = digitalRead(12);
   rightsensor = digitalRead(11);
 
+  // left to right
   if (leftsensor == LOW && centersensor == HIGH && rightsensor == LOW)
   {
     forward (50);
@@ -128,11 +123,7 @@ void loop() {
   else if (leftsensor == HIGH && centersensor == HIGH && rightsensor == HIGH)
   {
     rotate();
-  }
-  else if (leftsensor == HIGH && centersensor == LOW && rightsensor == HIGH)
-  {
-    rotate();
-  }
+  } 
 
 }
 
