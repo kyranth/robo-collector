@@ -5,7 +5,7 @@
 
 
 // Configuration
-int lineSpeed = 120;
+int lineSpeed = 125;
 
 // LED Pins
 int redPin = 11;
@@ -108,10 +108,6 @@ void robot::followLine() {
     forward(lineSpeed);
     rgbFlash("green");
 
-  } else if (centerS == 1) {
-    forward(lineSpeed);
-    rgbFlash("green");
-
   } else if (leftS == 0 && centerS == 1 && rightS == 1) {
     turnRight();
 
@@ -127,13 +123,15 @@ void robot::followLine() {
     turnLeft();
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    turnRight();
+    forward(lineSpeed);
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     setColor(200, 200, 200);
-    backward(lineSpeed);
-    if (leftS == 1 || centerS == 1 || rightS == 1) {
-      
-    }
+    forward(lineSpeed);
+
+  } else if (leftS == 1 && centerS == 0 && rightS == 1) {
+    forward(lineSpeed);
+  
   }
-}
+  }
+
