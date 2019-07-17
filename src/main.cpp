@@ -23,7 +23,7 @@ int defualtSpeed = 80;
 
 robot jeffbobthe3rd;
 
-const byte RECV_PIN = 7;
+const byte RECV_PIN = 3;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 unsigned long key_value = 0;
