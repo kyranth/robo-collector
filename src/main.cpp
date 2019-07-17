@@ -3,137 +3,137 @@
     License: iTEST NYU Robotis Course
     TEAM: {
       Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
-      Lena Khosrof, Yanni, Dishan
+      Lena Khosrof, Yanni, Dushan Persaud
     }
 
     Configuration:
-    Left Motor(10, 9)   leftColorSensor(11)     rightColorSensor(13)
-    Right Motor(6, 6)   centerColorSensor(12)   IRSensor()
-    RGB Led(2, 3, 4)    
+    Left Motor(10, 9)     leftColorSensor(11)       rightColorSensor(13)
+    Right Motor(6, 6)     centerColorSensor(12)     IRSensor()
+    ClawMotor(7, 8)       elbowMotor(2, 4)          RGB Led(11, 12, 13)
 
  */
 
-#include <IRremote.h>
+
 #include "motor.h"
 #include "sensor.h"
 #include "robot.h"
+#include <IRremote.h>
 
 int defualtSpeed = 80;
 
-
-int sensorleft = 11;
-int sensorcenter = 12;
-int sensorright = 13;
-int leftS = 1;
-int centerS = 1;
-int rightS = 1;
-
-int redPin = 3;
-int greenPin = 4;
-int bluePin = 2;
+robot jeffbobthe3rd;
 
 const byte RECV_PIN = 7;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 unsigned long key_value = 0;
 
-robot jeffbobthe3rd;
-motor leftMotor(10, 9); // CW, CCW
-motor rightMotor(6, 5);
+void manualControl(){
+	if (irrecv.decode(&results)) {
+ 
+        if (results.value == 0XFFFFFFFF)
+          results.value = key_value;
 
-//motor elbow(2, 4);
-//motor claw(7, 8);
-
-
-void robotForward(int driveSpeed) {
-  leftMotor.forward(driveSpeed);
-  rightMotor.forward(driveSpeed);
-  // Serial.println("---forward executed---");
-  // delay(10);
-  }
-
-void robotBackward(int driveSpeed) {
-  leftMotor.backward(driveSpeed);
-  rightMotor.backward(driveSpeed);
-  // Serial.println("---backward executed---");
-  // delay(10); 
-  }
-
-void turnLeft() {
-  leftMotor.backward(200);
-  rightMotor.forward(200);
+        switch(results.value){
+          case 0xFFA25D:
+          Serial.println("ON/Off");
+          break;
+          case 0xFF629D:
+          Serial.println("Vol+");
+          break;
+          case 0xFFE21D:
+          Serial.println("Func");
+          break;
+          case 0xFF22DD:
+          Serial.println("left");
+          jeffbobthe3rd.turnLeft();
+          break;
+          case 0xFF02FD:
+          Serial.println("Play/Pause");
+          break ;  
+          case 0xFFC23D:
+          Serial.println("Right");
+          jeffbobthe3rd.turnRight();
+          break ;   
+          case 0xFFE01F:
+          Serial.println("Down");
+          jeffbobthe3rd.backward(defualtSpeed);
+          break ;
+		      case 0xFF906F:
+          Serial.println("Up");
+          jeffbobthe3rd.forward(defualtSpeed);
+          break ;
+          case 0xFFA857:
+          Serial.println("Vol+");
+          break ;
+          case 0xFF6897:
+          Serial.println("0");
+          break ;  
+          case 0xFF9867:
+          Serial.println("EQ");
+          break ;
+          case 0xFFB04F:
+          Serial.println("ST/REPT");
+          break ;
+          case 0xFF30CF:
+          Serial.println("1");
+          break ;
+          case 0xFF18E7:
+          Serial.println("2");
+          break ;
+          case 0xFF7A85:
+          Serial.println("3");
+          break ;
+          case 0xFF10EF:
+          Serial.println("4");
+          break ;
+          case 0xFF38C7:
+          Serial.println("5");
+          break ;
+          case 0xFF5AA5:
+          Serial.println("6");
+          break ;
+          case 0xFF42BD:
+          Serial.println("7");
+          break ;
+          case 0xFF4AB5:
+          Serial.println("8");
+          break ;
+          case 0xFF52AD:
+          Serial.println("9");
+          break ;
+          default:
+          
+          break;     
+        }
+        key_value = results.value;
+        irrecv.resume();
+	}
 }
-
-void turnRight() {
-  leftMotor.forward(200);
-  rightMotor.backward(200);
-}
-
-void setColor(int redValue, int greenValue, int blueValue) {
-  analogWrite(redPin, redValue);
-  analogWrite(greenPin, greenValue);
-  analogWrite(bluePin, blueValue); }
-
-void flash() {
-  setColor(0, 200, 0);
-  delay(100);
-  setColor(0, 0, 0);
-  delay(100); }
-
 
 void setup () {
   jeffbobthe3rd.begin();
-  pinMode(sensorleft, INPUT);
-  pinMode(sensorcenter, INPUT);
-  pinMode(sensorright, INPUT);
+  irrecv.enableIRIn();
+  irrecv.blink13(true);
+
 }
 
 void loop() {
-	leftS = digitalRead(sensorleft);
-  //Serial.print("leftS: ");
-  //Serial.println(leftS);
-  //delay(200);
+if(irrecv.decode(&results)) {
+  if (results.value == 0XFFFFFFFF)
+    results.value = key_value;
+    switch(results.value) {
+      case 0xFF6897:
+      Serial.println("0: Autonomous Mode");
+      jeffbobthe3rd.followLine();
+      break ;
 
-  centerS = digitalRead(sensorcenter);
-  //Serial.print("centerS: ");
-  //Serial.println(centerS);
-  //delay(200);
-
-  rightS = digitalRead(sensorright);
-  //Serial.print("rightS: ");
-  //Serial.println(rightS);
-  //delay(200);
-  
-  if(leftS == 0 && centerS == 1 && rightS == 0) {
-    robotForward(defualtSpeed);
-    flash();
-
-  } else if (centerS == 1) {
-    robotForward(defualtSpeed);
-    flash();
-
-  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
-    turnRight();
-
-  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    turnRight();
-
-  } else if (rightS == 1 && centerS == 0 && leftS == 0) {
-    setColor(0, 0, 200);
-    turnRight();
-
-  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
-    setColor(200, 0, 0);
-    turnLeft();
-
-  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    turnRight();
-
-  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
-    setColor(200, 200, 200);
-    turnRight();
-    if (leftS == 1 || centerS == 1 || rightS == 1) {
-      
+      case 0xFF30CF:
+      Serial.println("1: Manual Mode");
+      manualControl();
+      break ;
     }
+    key_value = results.value;
+    irrecv.resume();
   }
 }

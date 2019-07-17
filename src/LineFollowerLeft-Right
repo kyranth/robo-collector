@@ -1,35 +1,3 @@
-#include <IRremote.h>
-#include "motor.h"
-#include "sensor.h"
-#include "robot.h"
-
-int defualtSpeed = 80;
-int sensorleft = 11;
-int sensorcenter = 12;
-int sensorright = 13;
-int leftS = 1;
-int centerS = 1;
-int rightS = 1;
-
-int redPin = 3;
-int greenPin = 4;
-int bluePin = 2;
-
-robot jeffbobthe3rd;
-motor leftMotor(10, 9); // CW, CCW
-motor rightMotor(6, 5);
-
-void setColor(int redValue, int greenValue, int blueValue) {
-  analogWrite(redPin, redValue);
-  analogWrite(greenPin, greenValue);
-  analogWrite(bluePin, blueValue); }
-
-void setup () {
-  jeffbobthe3rd.begin();
-  pinMode(sensorleft, INPUT);
-  pinMode(sensorcenter, INPUT);
-  pinMode(sensorright, INPUT);
-}
 
 void loop() {
 	leftS = digitalRead(sensorleft);
@@ -58,10 +26,10 @@ void loop() {
   } else if (leftS == 0 && centerS == 1 && rightS == 1) {
     turnRight();
 
-  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    turnRight();
+  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
+    turnLeft();
 
-  } else if (rightS == 1 && centerS == 0 && leftS == 0) {
+  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
     setColor(0, 0, 200);
     turnRight();
 
@@ -74,7 +42,7 @@ void loop() {
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     setColor(200, 200, 200);
-    turnRight();
+    robotBackward();
     if (leftS == 1 || centerS == 1 || rightS == 1) {
       
     }
