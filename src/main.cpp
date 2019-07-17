@@ -43,6 +43,14 @@ motor rightMotor(6, 5);
 motor elbow(A0, A1);
 motor claw(A2, A3);
 
+/*
+void lastSensor(){
+  int leftSensorState = digitalRead(sensorleft);
+  int rightSensorState = digitalRead(sensorcenter);
+  int leftSensorState = digitalRead(sensorright);
+  int lastSensorState;
+}
+*/
 
 void robotForward(int driveSpeed) {
   leftMotor.forward(driveSpeed);
@@ -58,15 +66,15 @@ void robotBackward(int driveSpeed) {
   // delay(10); 
   }
 
-void turnLeft(int turnAngle) {
+void turnLeft() {
   leftMotor.forward(240);
   rightMotor.forward(240);
-  delay(turnAngle); }
+  }
 
-void turnRight(int turnAngle) {
+void turnRight() {
   leftMotor.backward(240);
   rightMotor.backward(240);
-  delay(turnAngle); }
+  }
 
 void setColor(int redValue, int greenValue, int blueValue) {
   analogWrite(redPin, redValue);
@@ -102,38 +110,31 @@ void loop() {
   //Serial.println(rightS);
   //delay(200);
   
-  if(leftS == 0 && centerS == 1 && rightS == 0) {
-    robotForward(defualtSpeed);
-    flash();
-  } else if((centerS == 1) || (leftS == 0 && rightS == 0)) {
+  while (leftS == 0 && centerS == 1 && rightS == 0) {
     robotForward(defualtSpeed);
     flash();
 
-  } else if(rightS == 1 && centerS == 0 && leftS == 0) {
-    leftMotor.forward(defualtSpeed);
-    rightMotor.stop();
+  } while ((centerS == 1) || (leftS == 0 && rightS == 0)) {
+    robotForward(defualtSpeed);
+    flash();
+
+  } while (rightS == 1 && centerS == 0 && leftS == 0) {
+    turnRight();
     setColor(0, 0, 200);
 
-  } else if(leftS == 1 && centerS == 0 && rightS == 0) {
-    leftMotor.stop();
-    rightMotor.forward(defualtSpeed);
-    setColor(0, 0, 200);
-
-  } else if(leftS == 0 && centerS == 0 && rightS == 0) {
+  } while (leftS == 1 && centerS == 0 && rightS == 0) {
+    turnLeft();
     setColor(200, 0, 0);
-    leftMotor.forward(defualtSpeed);
-    delay(2000);
-    if(leftS == 0) {
-      leftMotor.stop();
-      rightMotor.stop();
-    } else if(rightS == 0) {
-      leftMotor.stop();
-      rightMotor.stop();
-    } else if(leftS == 1) {
-      rightMotor.forward(defualtSpeed);
-    } else if(rightS == 1) {
-      leftMotor.forward(defualtSpeed);
+
+  } while (leftS == 1 && centerS == 1 && rightS == 1) {
+    turnRight();
+
+  } while(leftS == 0 && centerS == 0 && rightS == 0) {
+    setColor(200, 200, 200);
+    if (leftS == 1 || centerS == 1 || rightS == 1) {
+      
     }
+   
   }
 }
 
