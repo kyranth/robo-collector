@@ -1,0 +1,50 @@
+
+void loop() {
+	leftS = digitalRead(sensorleft);
+  //Serial.print("leftS: ");
+  //Serial.println(leftS);
+  //delay(200);
+
+  centerS = digitalRead(sensorcenter);
+  //Serial.print("centerS: ");
+  //Serial.println(centerS);
+  //delay(200);
+
+  rightS = digitalRead(sensorright);
+  //Serial.print("rightS: ");
+  //Serial.println(rightS);
+  //delay(200);
+  
+  if(leftS == 0 && centerS == 1 && rightS == 0) {
+    robotForward(defualtSpeed);
+    flash();
+
+  } else if (centerS == 1) {
+    robotForward(defualtSpeed);
+    flash();
+
+  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
+    turnRight();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
+    turnLeft();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
+    setColor(0, 0, 200);
+    turnRight();
+
+  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
+    setColor(200, 0, 0);
+    turnLeft();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+    turnRight();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
+    setColor(200, 200, 200);
+    robotBackward();
+    if (leftS == 1 || centerS == 1 || rightS == 1) {
+      
+    }
+  }
+}

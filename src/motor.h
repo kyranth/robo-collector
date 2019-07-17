@@ -16,7 +16,8 @@ class motor {
 
     // forward is CW - LOW, CCW - driveSpeed
     void forward(int driveSpeed);
-
+    void open();
+    void close();
     void stop();
 
 };

@@ -1,6 +1,6 @@
 #include "motor.h"
 #include "sensor.h"
-#include "Arduino.h"
+#include <Arduino.h>
 
 class robot {
 private:
@@ -8,9 +8,12 @@ private:
 public:
 	robot();
 	void begin();
-	void robotForward(int driveSpeed, int driveTime);
-	void robotBackward(int driveSpeed, int driveTime);
-	void turnLeft(int turnAngle);
-	void turnRight(int turnAngle);
+	void forward(int driveSpeed);
+	void backward(int driveSpeed);
+	void turnLeft();
+	void turnRight();
 	void manualControl();
+	void setColor(int redPin, int greenValue, int blueValue);
+	int rgbFlash(String color);
+	void followLine();
 };

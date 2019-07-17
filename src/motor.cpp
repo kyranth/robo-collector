@@ -25,9 +25,19 @@ void motor::forward(int driveSpeed) {
   //delay(10);
 }
 
+void motor::open(){
+  digitalWrite(_CW, HIGH);
+  digitalWrite(_CCW, LOW);
+}
+
+void motor::close() {
+  digitalWrite(_CW, LOW);
+  digitalWrite(_CCW, HIGH);
+}
+
 void motor::stop() {
-  analogWrite(_CW, LOW);
-  analogWrite(_CCW, LOW);
+  digitalWrite(_CW, LOW);
+  digitalWrite(_CCW, LOW);
   //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
   //Serial.println("---stopped---");
   //delay(10);
