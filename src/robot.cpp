@@ -23,8 +23,6 @@ int rightS = 1;
 
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
-motor elbow(2, 4);
-motor claw(7, 8);
 
 robot::robot(){
 
@@ -36,6 +34,9 @@ void robot::begin(){
   pinMode(sensorleft, INPUT);
   pinMode(sensorcenter, INPUT);
   pinMode(sensorright, INPUT);
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
 }
 
 

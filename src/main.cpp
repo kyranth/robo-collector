@@ -18,10 +18,14 @@
 #include "sensor.h"
 #include "robot.h"
 #include <IRremote.h>
+#include <HCSR04.h>
 
 int defualtSpeed = 80;
 
+motor elbow(2, 4);
+motor claw(7, 8);
 robot jeffbobthe3rd;
+UltraSonicDistanceSensor distanceSensor(A4, A3);
 
 const byte RECV_PIN = 3;
 IRrecv irrecv(RECV_PIN);
@@ -111,6 +115,7 @@ void manualControl(){
 	}
 }
 
+
 void setup () {
   jeffbobthe3rd.begin();
   irrecv.enableIRIn();
@@ -119,6 +124,7 @@ void setup () {
 }
 
 void loop() {
+  /*
 if(irrecv.decode(&results)) {
   if (results.value == 0XFFFFFFFF)
     results.value = key_value;
@@ -136,4 +142,20 @@ if(irrecv.decode(&results)) {
     key_value = results.value;
     irrecv.resume();
   }
+*/
+  int centimeters = distanceSensor.measureDistanceCm();
+  Serial.println(centimeters);
+  delay(100);
+  if(0 < centimeters < 5) {
+    jeffbobthe3rd.setColor(200, 0, 0);
+    claw.open();
+
+  } else if (centimeters > 5) {
+    jeffbobthe3rd.setColor(0, 200, 0);
+    claw.close();
+    delay(2000);
+    claw.open();
+  }
+  
+
 }
