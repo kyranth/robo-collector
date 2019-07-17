@@ -93,9 +93,9 @@ void setup()
   pinMode(A2, INPUT);
 }
 
-void loop()
-{
-
+void loop() {
+  int centimeters = distanceSensor.measureDistanceCm();
+  int inches = centimeters / 2.54;
   leftsensor = digitalRead(A2); // Left sensor takes input from Pin 13.
   centersensor = digitalRead(A1);
   rightsensor = digitalRead(A0);
@@ -175,3 +175,16 @@ void loop()
 // left sensor = Pin 11
 // center sensor = Pin 12
 // right sensor = Pin 13
+
+
+// Every 500 miliseconds, do a measurement using the sensor and print the distance in centimeters.
+    Serial.println(distanceSensor.measureDistanceCm());
+    int centimeters = distanceSensor.measureDistanceCm();
+    int inches = centimeters / 2.54;
+    Serial.println(inches);
+    delay(500);
+
+    if(inches <= 3)
+    {
+      // Close claw motor
+    }

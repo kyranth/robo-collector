@@ -5,7 +5,7 @@
 
 
 // Configuration
-int lineSpeed = 80;
+int lineSpeed = 120;
 
 // LED Pins
 int redPin = 11;
