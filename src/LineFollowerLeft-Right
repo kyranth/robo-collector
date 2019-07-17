@@ -1,26 +1,9 @@
-/*
-    JEFF BOB THE 3RD(Clawbot)
-    License: iTEST NYU Robotis Course
-    TEAM: {
-      Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
-      Lena Khosrof, Yanni, Dishan
-    }
-
-    Configuration:
-    Left Motor(10, 9)   leftColorSensor(11)     rightColorSensor(13)
-    Right Motor(6, 6)   centerColorSensor(12)   IRSensor()
-    RGB Led(2, 3, 4)    
-
- */
-
 #include <IRremote.h>
 #include "motor.h"
 #include "sensor.h"
 #include "robot.h"
 
 int defualtSpeed = 80;
-
-
 int sensorleft = 11;
 int sensorcenter = 12;
 int sensorright = 13;
@@ -32,54 +15,14 @@ int redPin = 3;
 int greenPin = 4;
 int bluePin = 2;
 
-const byte RECV_PIN = 7;
-IRrecv irrecv(RECV_PIN);
-decode_results results;
-unsigned long key_value = 0;
-
 robot jeffbobthe3rd;
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
-
-//motor elbow(2, 4);
-//motor claw(7, 8);
-
-
-void robotForward(int driveSpeed) {
-  leftMotor.forward(driveSpeed);
-  rightMotor.forward(driveSpeed);
-  // Serial.println("---forward executed---");
-  // delay(10);
-  }
-
-void robotBackward(int driveSpeed) {
-  leftMotor.backward(driveSpeed);
-  rightMotor.backward(driveSpeed);
-  // Serial.println("---backward executed---");
-  // delay(10); 
-  }
-
-void turnLeft() {
-  leftMotor.backward(200);
-  rightMotor.forward(200);
-}
-
-void turnRight() {
-  leftMotor.forward(200);
-  rightMotor.backward(200);
-}
 
 void setColor(int redValue, int greenValue, int blueValue) {
   analogWrite(redPin, redValue);
   analogWrite(greenPin, greenValue);
   analogWrite(bluePin, blueValue); }
-
-void flash() {
-  setColor(0, 200, 0);
-  delay(100);
-  setColor(0, 0, 0);
-  delay(100); }
-
 
 void setup () {
   jeffbobthe3rd.begin();
