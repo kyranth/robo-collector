@@ -13,7 +13,6 @@
 
  */
 
-
 #include <IRremote.h>
 #include "motor.h"
 #include "sensor.h"
@@ -78,8 +77,7 @@ void flash() {
   setColor(0, 200, 0);
   delay(100);
   setColor(0, 0, 0);
-  delay(100);
-}
+  delay(100); }
 
 void setup () {
   jeffbobthe3rd.begin();
@@ -89,8 +87,6 @@ void setup () {
 }
 
 void loop() {
-/*
-{  
 	leftS = digitalRead(sensorleft);
   //Serial.print("leftS: ");
   //Serial.println(leftS);
@@ -109,17 +105,17 @@ void loop() {
   if(leftS == 0 && centerS == 1 && rightS == 0) {
     robotForward(defualtSpeed);
     flash();
-  } else if(centerS == 1) {
+  } else if((centerS == 1) || (leftS == 0 && rightS == 0)) {
     robotForward(defualtSpeed);
     flash();
 
-  } else if(rightS == 1) {
+  } else if(rightS == 1 && centerS == 0 && leftS == 0) {
     leftMotor.forward(defualtSpeed);
-    //rightMotor.backward(defualtSpeed);
+    rightMotor.stop();
     setColor(0, 0, 200);
 
-  } else if(leftS == 1) {
-    //leftMotor.backward(defualtSpeed);
+  } else if(leftS == 1 && centerS == 0 && rightS == 0) {
+    leftMotor.stop();
     rightMotor.forward(defualtSpeed);
     setColor(0, 0, 200);
 
@@ -140,10 +136,8 @@ void loop() {
     }
   }
 }
-*/
 
-claw.forward(70);
-delay(1000);
-claw.stop();
+// claw.forward(70);
+// delay(1000);
+// claw.stop();
 
-}
