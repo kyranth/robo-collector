@@ -101,6 +101,7 @@ void loop() {
   centersensor = digitalRead(12);
   rightsensor = digitalRead(11);
 
+  // left to right
   if (leftsensor == LOW && centersensor == HIGH && rightsensor == LOW)
   {
     forward (50);
