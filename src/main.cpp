@@ -43,14 +43,6 @@ motor rightMotor(6, 5);
 motor elbow(A0, A1);
 motor claw(A2, A3);
 
-/*
-void lastSensor(){
-  int leftSensorState = digitalRead(sensorleft);
-  int rightSensorState = digitalRead(sensorcenter);
-  int leftSensorState = digitalRead(sensorright);
-  int lastSensorState;
-}
-*/
 
 void robotForward(int driveSpeed) {
   leftMotor.forward(driveSpeed);
