@@ -18,9 +18,9 @@ int rightangle = 200;
 
 void checksensor()
 {
-  leftsensor = digitalRead(13); // Left sensor takes input from Pin 13.
-  centersensor = digitalRead(12);
-  rightsensor = digitalRead(11);
+  leftsensor = digitalRead(A2); // Left sensor takes input from Pin 13.
+  centersensor = digitalRead(A1);
+  rightsensor = digitalRead(A0);
 }
 
 void rightturn()
@@ -81,17 +81,17 @@ void setup()
   pinMode(rightmotorPin5F, OUTPUT);
   pinMode(rightmotorPin6B, OUTPUT);
 
-  pinMode(11, INPUT);
-  pinMode(12, INPUT);
-  pinMode(13, INPUT);
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
 }
 
 void loop()
 {
 
-  leftsensor = digitalRead(13); // Left sensor takes input from Pin 13.
-  centersensor = digitalRead(12);
-  rightsensor = digitalRead(11);
+  leftsensor = digitalRead(A2); // Left sensor takes input from Pin 13.
+  centersensor = digitalRead(A1);
+  rightsensor = digitalRead(A0);
   Serial.print(leftsensor);
   Serial.print(centersensor);
   Serial.print(rightsensor);
