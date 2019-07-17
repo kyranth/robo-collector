@@ -1,5 +1,12 @@
 /* This code was written for an ITEST activity in which our objective was to automate a robot's response so that it can
    follow a black line in the shape of a square. We mounted sensors on the robot which detected the white and black lines.
+
+   JEFF BOB THE 3RD(Clawbot)
+    License: iTEST NYU Robotis Course
+    TEAM: {
+      Dr. Walcott, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
+      Lena Khosrof, Yanni, Dushan Persaud
+    }
 */
 
 int leftmotorPin9B = 9;
