@@ -2,7 +2,7 @@
     JEFF BOB THE 3RD(Clawbot)
     License: iTEST NYU Robotis Course
     TEAM: {
-      Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
+      Dr. Walcott, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
       Lena Khosrof, Yanni, Dishan
     }
 
@@ -21,9 +21,9 @@
 int defualtSpeed = 80;
 
 
-int sensorleft = 11;
-int sensorcenter = 12;
-int sensorright = 13;
+int sensorleft = A2;
+int sensorcenter = A1;
+int sensorright = A0;
 int leftS = 1;
 int centerS = 1;
 int rightS = 1;
