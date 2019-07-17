@@ -67,13 +67,13 @@ void robotBackward(int driveSpeed) {
   }
 
 void turnLeft() {
-  leftMotor.forward(240);
-  rightMotor.forward(240);
+  leftMotor.backward(200);
+  rightMotor.forward(200);
   }
 
 void turnRight() {
-  leftMotor.backward(240);
-  rightMotor.backward(240);
+  leftMotor.forward(200);
+  rightMotor.backward(200);
   }
 
 void setColor(int redValue, int greenValue, int blueValue) {
@@ -110,27 +110,34 @@ void loop() {
   //Serial.println(rightS);
   //delay(200);
   
-  while (leftS == 0 && centerS == 1 && rightS == 0) {
+  if(leftS == 0 && centerS == 1 && rightS == 0) {
     robotForward(defualtSpeed);
     flash();
 
-  } while ((centerS == 1) || (leftS == 0 && rightS == 0)) {
+  } else if (centerS == 1) {
     robotForward(defualtSpeed);
     flash();
 
-  } while (rightS == 1 && centerS == 0 && leftS == 0) {
+  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
     turnRight();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+    turnRight();
+
+  } else if (rightS == 1 && centerS == 0 && leftS == 0) {
     setColor(0, 0, 200);
-
-  } while (leftS == 1 && centerS == 0 && rightS == 0) {
-    turnLeft();
-    setColor(200, 0, 0);
-
-  } while (leftS == 1 && centerS == 1 && rightS == 1) {
     turnRight();
 
-  } while(leftS == 0 && centerS == 0 && rightS == 0) {
+  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
+    setColor(200, 0, 0);
+    turnLeft();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+    turnRight();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     setColor(200, 200, 200);
+    turnRight();
     if (leftS == 1 || centerS == 1 || rightS == 1) {
       
     }
