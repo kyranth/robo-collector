@@ -72,7 +72,7 @@ void robot::setColor(int redValue, int greenValue, int blueValue) {
 
 int robot::rgbFlash(String color) {
     if (color == "red") {
-      setColor(0, 0, 200);
+      setColor(200, 0, 0);
       delay(100);
       setColor(0, 0, 0);
       delay(100); 
@@ -82,7 +82,7 @@ int robot::rgbFlash(String color) {
       setColor(0, 0, 0);
       delay(100); 
     } else if (color == "blue") {
-      setColor(200, 0, 0);
+      setColor(0, 0, 200);
       delay(100);
       setColor(0, 0, 0);
       delay(100);
@@ -128,11 +128,11 @@ void robot::followLine() {
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     setColor(200, 200, 200);
-    forward(lineSpeed);
+    backward(lineSpeed);
 
   } else if (leftS == 1 && centerS == 0 && rightS == 1) {
     forward(lineSpeed);
   
   }
-  }
+}
 
