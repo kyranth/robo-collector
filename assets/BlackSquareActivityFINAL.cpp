@@ -103,6 +103,7 @@ void loop() {
   Serial.print(leftsensor);
   Serial.print(centersensor);
   Serial.print(rightsensor);
+  
 
   if (leftsensor == LOW && centersensor == HIGH && rightsensor == LOW)
   {
