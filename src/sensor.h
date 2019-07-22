@@ -14,7 +14,7 @@ class sensor {
  public:
    // public member
    sensor(int sensorPin);
-   int sensorDRead();
+   int DRead();
 
 };
 

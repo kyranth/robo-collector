@@ -5,24 +5,17 @@
 
 
 // Configuration
-int lineSpeed = 125;
 
-// LED Pins
-int redPin = 11;
-int greenPin = 12;
-int bluePin = 13;
-
-// Sensor Pins
-int sensorleft = 11;
-int sensorcenter = 12;
-int sensorright = 13;
 int leftS = 1;
 int centerS = 1;
 int rightS = 1;
 
-
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
+
+sensor leftIR(A0);
+sensor centerIR(A1);
+sensor rightIR(A2);
 
 robot::robot(){
 
@@ -31,14 +24,13 @@ robot::robot(){
 void robot::begin(){
 	Serial.begin(9600);
 	Serial.println("Robot Ready");
-  pinMode(sensorleft, INPUT);
-  pinMode(sensorcenter, INPUT);
-  pinMode(sensorright, INPUT);
-  pinMode(redPin, OUTPUT);
-  pinMode(greenPin, OUTPUT);
-  pinMode(bluePin, OUTPUT);
 }
 
+void robot::ReadIR() {
+  leftS = leftIR.DRead();
+  centerS = centerIR.DRead();
+  rightS = rightIR.DRead();
+}
 
 void robot::forward(int driveSpeed) {
   leftMotor.forward(driveSpeed);
@@ -64,75 +56,93 @@ void robot::turnLeft() {
   rightMotor.forward(200);
 }
 
-void robot::setColor(int redValue, int greenValue, int blueValue) {
-  analogWrite(redPin, redValue);
-  analogWrite(greenPin, greenValue);
-  analogWrite(bluePin, blueValue); 
-}
-
-int robot::rgbFlash(String color) {
-    if (color == "red") {
-      setColor(200, 0, 0);
-      delay(100);
-      setColor(0, 0, 0);
-      delay(100); 
-    } else if (color == "green") {
-      setColor(0, 200, 0);
-      delay(100);
-      setColor(0, 0, 0);
-      delay(100); 
-    } else if (color == "blue") {
-      setColor(0, 0, 200);
-      delay(100);
-      setColor(0, 0, 0);
-      delay(100);
-    }
+void robot::stop() {
+  leftMotor.stop();
+  rightMotor.stop();
 }
 
 void robot::followLine() {
-  leftS = digitalRead(sensorleft);
-  //Serial.print("leftS: ");
-  //Serial.println(leftS);
-  //delay(200);
-
-  centerS = digitalRead(sensorcenter);
-  //Serial.print("centerS: ");
-  //Serial.println(centerS);
-  //delay(200);
-
-  rightS = digitalRead(sensorright);
-  //Serial.print("rightS: ");
-  //Serial.println(rightS);
-  //delay(200);
+  int lineSpeed = 80;
+  ReadIR();
   
   if(leftS == 0 && centerS == 1 && rightS == 0) {
     forward(lineSpeed);
-    rgbFlash("green");
+    ReadIR();
 
   } else if (leftS == 0 && centerS == 1 && rightS == 1) {
     turnRight();
+    ReadIR();
 
   } else if (leftS == 1 && centerS == 1 && rightS == 0) {
     turnLeft();
+    ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 1) {
-    setColor(0, 0, 200);
+    // setColor(0, 0, 200);
     turnRight();
+    ReadIR();
 
   } else if (leftS == 1 && centerS == 0 && rightS == 0) {
-    setColor(200, 0, 0);
+    // setColor(200, 0, 0);
     turnLeft();
+    ReadIR();
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
     forward(lineSpeed);
+    ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
-    setColor(200, 200, 200);
-    backward(lineSpeed);
+    // setColor(200, 200, 200);
+    leftMotor.stop();
+    rightMotor.stop();
+    ReadIR();
 
-  } else if (leftS == 1 && centerS == 0 && rightS == 1) {
-    forward(lineSpeed);
-  
   }
+
+}
+
+void robot::CheckForCup() {
+  
+}
+
+void robot::followLineIT() {
+  int lineSpeed = 80;
+  count = 0;
+  ReadIR();
+  if(leftS == 0 && centerS == 1 && rightS == 0) {
+    forward(lineSpeed);
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
+    // setColor(0, 0, 200);
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
+    // setColor(200, 0, 0);
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+    leftMotor.stop();
+    rightMotor.stop();
+    ReadIR();
+    count++;
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
+    // setColor(200, 200, 200);
+    leftMotor.stop();
+    rightMotor.stop();
+    ReadIR();
+  } 
+
 }
 

@@ -25,7 +25,7 @@ void motor::forward(int driveSpeed) {
   //delay(10);
 }
 
-void motor::open(){
+void motor::open() {
   digitalWrite(_CW, HIGH);
   digitalWrite(_CCW, LOW);
 }

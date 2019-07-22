@@ -7,8 +7,9 @@ sensor::sensor(int sensorPin) {
 
 }
 
-int sensor::sensorDRead() {
+int sensor::DRead() {
     int value = digitalRead(_sensorPin);
     Serial.print("");
     return value;
 }
+
