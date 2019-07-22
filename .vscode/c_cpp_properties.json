@@ -9,8 +9,8 @@
             "includePath": [
                 "/Users/k084/Documents/Repositories/iTEST/VexSRC/include",
                 "/Users/k084/Documents/Repositories/iTEST/VexSRC/src",
-                "/Users/k084/Documents/Arduino/libraries/HCSR04-1.0.0/src",
                 "/Users/k084/Documents/Arduino/libraries/IRremote",
+                "/Users/k084/Documents/Arduino/libraries/HCSR04-1.0.0/src",
                 "/Users/k084/.platformio/packages/framework-arduinoavr/cores/arduino",
                 "/Users/k084/.platformio/packages/framework-arduinoavr/variants/standard",
                 "/Users/k084/Documents/Arduino/libraries/Adafruit_Circuit_Playground",
@@ -41,8 +41,8 @@
                 "path": [
                     "/Users/k084/Documents/Repositories/iTEST/VexSRC/include",
                     "/Users/k084/Documents/Repositories/iTEST/VexSRC/src",
-                    "/Users/k084/Documents/Arduino/libraries/HCSR04-1.0.0/src",
                     "/Users/k084/Documents/Arduino/libraries/IRremote",
+                    "/Users/k084/Documents/Arduino/libraries/HCSR04-1.0.0/src",
                     "/Users/k084/.platformio/packages/framework-arduinoavr/cores/arduino",
                     "/Users/k084/.platformio/packages/framework-arduinoavr/variants/standard",
                     "/Users/k084/Documents/Arduino/libraries/Adafruit_Circuit_Playground",
