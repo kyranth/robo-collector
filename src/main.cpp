@@ -143,6 +143,7 @@ if(irrecv.decode(&results)) {
     irrecv.resume();
   }
 */
+
   int centimeters = distanceSensor.measureDistanceCm();
   Serial.println(centimeters);
   delay(100);
