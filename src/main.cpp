@@ -157,5 +157,4 @@ if(irrecv.decode(&results)) {
     claw.open();
   }
   
-
 }
