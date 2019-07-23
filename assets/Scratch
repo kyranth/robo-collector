@@ -1,7 +1,6 @@
 
 
-int centimeters = distanceSensor.measureDistanceCm();
-  centimeters = 0;
+
   Serial.println(centimeters);
   delay(100);
 
@@ -15,7 +14,6 @@ int centimeters = distanceSensor.measureDistanceCm();
     delay(2000);
     claw.open();
   }
-  readSensor();
 
 
 

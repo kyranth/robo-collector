@@ -2,20 +2,22 @@
 #include "motor.h"
 #include "sensor.h"
 #include <Arduino.h>
-
+#include <HCSR04.h>
 
 // Configuration
-
 int leftS = 1;
 int centerS = 1;
 int rightS = 1;
 
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
+motor elbow(2, 4);
+motor claw(7, 8);
 
 sensor leftIR(A0);
 sensor centerIR(A1);
 sensor rightIR(A2);
+UltraSonicDistanceSensor distanceSensor(A4, A3);
 
 robot::robot(){
 
@@ -102,7 +104,24 @@ void robot::followLine() {
 }
 
 void robot::CheckForCup() {
-  
+  if(count > 0) {
+    turnRight();
+    forward();
+    ReadIR();
+    while(leftS == 0 && centerS == 0 && rightS == 0) {
+      stop();
+      int centimeters = distanceSensor.measureDistanceCm();
+      centimeters = 0;
+      if (centimeters > 5) {
+        claw.open();
+
+      } else if (centimeters < 5) {
+        claw.close();
+
+      }
+    }
+    
+  }
 }
 
 void robot::followLineIT() {

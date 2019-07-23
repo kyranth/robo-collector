@@ -18,12 +18,9 @@
 #include "sensor.h"
 #include "robot.h"
 #include <IRremote.h>
-#include <HCSR04.h>
 
-motor elbow(2, 4);
-motor claw(7, 8);
 robot rad;
-UltraSonicDistanceSensor distanceSensor(A4, A3);
+
 
 
 void setup () {
@@ -34,6 +31,6 @@ void setup () {
 
 void loop() {
   rad.followLineIT();
-  
+  rad.CheckForCup();
 }
 
