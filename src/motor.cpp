@@ -26,13 +26,13 @@ void motor::forward(int driveSpeed) {
 }
 
 void motor::open() {
-  digitalWrite(_CW, HIGH);
-  digitalWrite(_CCW, LOW);
+  digitalWrite(_CW, LOW);
+  digitalWrite(_CCW, HIGH);
 }
 
 void motor::close() {
-  digitalWrite(_CW, LOW);
-  digitalWrite(_CCW, HIGH);
+  digitalWrite(_CW, HIGH);
+  digitalWrite(_CCW, LOW);
 }
 
 void motor::stop() {

@@ -17,11 +17,9 @@
 #include "motor.h"
 #include "sensor.h"
 #include "robot.h"
-#include <IRremote.h>
+
 
 robot rad;
-
-
 
 void setup () {
   rad.begin();
@@ -30,7 +28,7 @@ void setup () {
 
 
 void loop() {
-  rad.followLineIT();
-  rad.CheckForCup();
+  rad.goBack();
+  
 }
 

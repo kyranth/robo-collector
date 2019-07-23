@@ -9,6 +9,8 @@ int leftS = 1;
 int centerS = 1;
 int rightS = 1;
 
+int lineSpeed = 80;
+
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
 motor elbow(2, 4);
@@ -32,6 +34,14 @@ void robot::ReadIR() {
   leftS = leftIR.DRead();
   centerS = centerIR.DRead();
   rightS = rightIR.DRead();
+}
+
+void robot::clawOpen() {
+  claw.open();
+} 
+
+void robot::clawClose () {
+  claw.close();
 }
 
 void robot::forward(int driveSpeed) {
@@ -103,31 +113,43 @@ void robot::followLine() {
 
 }
 
-void robot::CheckForCup() {
-  if(count > 0) {
-    turnRight();
-    forward();
-    ReadIR();
-    while(leftS == 0 && centerS == 0 && rightS == 0) {
-      stop();
-      int centimeters = distanceSensor.measureDistanceCm();
-      centimeters = 0;
-      if (centimeters > 5) {
-        claw.open();
 
-      } else if (centimeters < 5) {
-        claw.close();
+void robot::grabCup() {
+  centimeters = distanceSensor.measureDistanceCm();
+  forward(lineSpeed);
+  if (centimeters > 5) {
+    claw.open();
 
-      }
-    }
+  } else if (centimeters < 5) {
+    stop();
+    delay(1000);
+    claw.close();
     
+  }
+  
+}
+
+void robot::CheckForCup() {
+  centimeters = distanceSensor.measureDistanceCm();
+  if (centimeters > 15) {
+    forward(lineSpeed);
+
+  } else {
+    goBack();
+
   }
 }
 
+void robot::goBack() {
+  turnRight();
+  forward(lineSpeed);
+  followLineIT();
+
+}
+
 void robot::followLineIT() {
-  int lineSpeed = 80;
-  count = 0;
   ReadIR();
+
   if(leftS == 0 && centerS == 1 && rightS == 0) {
     forward(lineSpeed);
     ReadIR();
@@ -141,27 +163,25 @@ void robot::followLineIT() {
     ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 1) {
-    // setColor(0, 0, 200);
     turnRight();
     ReadIR();
 
   } else if (leftS == 1 && centerS == 0 && rightS == 0) {
-    // setColor(200, 0, 0);
     turnLeft();
     ReadIR();
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    leftMotor.stop();
-    rightMotor.stop();
+    juncVar++;
     ReadIR();
-    count++;
-
+    
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
-    // setColor(200, 200, 200);
-    leftMotor.stop();
-    rightMotor.stop();
+    grabCup();
     ReadIR();
   } 
 
 }
 
+void robot::junction() {
+  
+  
+}
