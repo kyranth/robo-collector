@@ -28,7 +28,7 @@ void setup () {
 
 
 void loop() {
-  rad.goBack();
-  
+  rad.followLineIT();
+
 }
 

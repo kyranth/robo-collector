@@ -28,6 +28,8 @@ robot::robot(){
 void robot::begin(){
 	Serial.begin(9600);
 	Serial.println("Robot Ready");
+  claw.open();
+  delay(1500);
 }
 
 void robot::ReadIR() {
@@ -116,38 +118,35 @@ void robot::followLine() {
 
 void robot::grabCup() {
   centimeters = distanceSensor.measureDistanceCm();
-  forward(lineSpeed);
+  // Serial.println(centimeters);
   if (centimeters > 5) {
     claw.open();
-
+   
   } else if (centimeters < 5) {
-    stop();
     delay(1000);
     claw.close();
-    
-  }
-  
-}
-
-void robot::CheckForCup() {
-  centimeters = distanceSensor.measureDistanceCm();
-  if (centimeters > 15) {
-    forward(lineSpeed);
-
-  } else {
+    delay(1000);
     goBack();
 
   }
 }
 
-void robot::goBack() {
-  turnRight();
-  forward(lineSpeed);
-  followLineIT();
+void robot::CheckForCup() {
+  centimeters = distanceSensor.measureDistanceCm();
+  Serial.println(centimeters);
+  if (centimeters > 20) {
+    forward(lineSpeed);
+    grabCup();
 
+  } else if (centimeters < 20) {
+    backward(lineSpeed);
+
+  }
 }
 
+
 void robot::followLineIT() {
+  //count = 0;
   ReadIR();
 
   if(leftS == 0 && centerS == 1 && rightS == 0) {
@@ -171,17 +170,13 @@ void robot::followLineIT() {
     ReadIR();
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    juncVar++;
-    ReadIR();
+    turnRight();
+    //count++;
     
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
-    grabCup();
-    ReadIR();
-  } 
+    stop();
+
+  }
 
 }
 
-void robot::junction() {
-  
-  
-}

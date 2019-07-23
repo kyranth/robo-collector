@@ -21,7 +21,7 @@ public:
 	void ReadIR();
 	void grabCup();
 	void goBack();
-	void junctions();
+	void junction();
 	void followLine();
 	void followLineIT();
 	void CheckForCup();
