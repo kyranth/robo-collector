@@ -100,9 +100,10 @@ void robot::grabCup() {
 }
 
 void robot::junction() {
+  int JuncTime = 200;
   if (count == 1) {
     forward(lineSpeed);
-    delay(200);   // 100
+    delay(JuncTime);
     stop();
     ReadIR();
     while (centerS == 1) {
@@ -117,12 +118,12 @@ void robot::junction() {
 
   } else if (count == 2) {
       forward(255);
-      delay(200);   // 200
+      delay(JuncTime);
       ReadIR();
 
   } else if (count == 3) {
     forward(lineSpeed);
-    delay(200);
+    delay(JuncTime);
     ReadIR();
     while (centerS == 1) {
       turnLeft();

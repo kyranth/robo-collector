@@ -8,7 +8,6 @@ private:
 public:
 	int count = 0;
 	int centimeters;
-	int juncVar;
 	robot();
 	void begin();
 	void clawOpen();
@@ -23,7 +22,5 @@ public:
 	void goBack();
 	void junction();
 	void followLine();
-	void followLineIT();
-	void CheckForCup();
-	void trashCollect();
+	void sortCup();
 };
