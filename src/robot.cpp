@@ -9,7 +9,7 @@ int leftS = 1;
 int centerS = 1;
 int rightS = 1;
 
-int lineSpeed = 80;
+int lineSpeed = 255;
 
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
@@ -27,6 +27,8 @@ robot::robot(){
 void robot::begin(){
 	Serial.begin(9600);
 	Serial.println("Robot Ready");
+  claw.close();
+  delay(500);
   claw.open();
   delay(1500);
 }
@@ -70,9 +72,26 @@ void robot::stop() {
   rightMotor.stop();
 }
 
+void robot::junction(){
+  forward(lineSpeed);
+  delay(100);
+  stop();
+  ReadIR();
+  while (centerS == 1) {
+    turnRight();
+    ReadIR();
+
+  } while (centerS == 0) {
+    turnRight();
+    ReadIR();
+  }
+  count = 0;
+  
+}
+
 void robot::followLine() {
   ReadIR();
-  
+ 
   if(leftS == 0 && centerS == 1 && rightS == 0) {
     forward(lineSpeed);
     ReadIR();
@@ -94,26 +113,27 @@ void robot::followLine() {
     ReadIR();
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    forward(lineSpeed);
+    count++;
     ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     stop();
+    grabCup();
     ReadIR();
 
-  }
+  } 
 
 }
 
 
 void robot::grabCup() {
   centimeters = distanceSensor.measureDistanceCm();
-  // Serial.println(centimeters);
-  if (centimeters > 5) {
+  Serial.println(centimeters);
+  if (centimeters > 7) {
     claw.open();
    
   } else if (centimeters < 5) {
-    delay(1000);
+    // delay(1000);
     claw.close();
     delay(1000);
     goBack();
@@ -140,38 +160,7 @@ void robot::CheckForCup() {
 }
 
 
-void robot::followLineIT() {
-  //count = 0;
-  ReadIR();
-
-  if(leftS == 0 && centerS == 1 && rightS == 0) {
-    forward(lineSpeed);
-    ReadIR();
-
-  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
-    turnRight();
-    ReadIR();
-
-  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
-    turnLeft();
-    ReadIR();
-
-  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
-    turnRight();
-    ReadIR();
-
-  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
-    turnLeft();
-    ReadIR();
-
-  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
-    turnRight();
-    //count++;
-    
-  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
-    stop();
-
-  }
-
-}
-
+// void robot::trashCollect() {
+//   followLine();
+//   if 
+// }

@@ -6,7 +6,7 @@ class robot {
 private:
 
 public:
-	int count;
+	int count = 0;
 	int centimeters;
 	int juncVar;
 	robot();
@@ -25,4 +25,5 @@ public:
 	void followLine();
 	void followLineIT();
 	void CheckForCup();
+	void trashCollect();
 };
