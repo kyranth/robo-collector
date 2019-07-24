@@ -8,8 +8,9 @@
 int leftS = 1;
 int centerS = 1;
 int rightS = 1;
+bool isThereCup = false;
 
-int lineSpeed = 255;
+int lineSpeed = 160;
 
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
@@ -72,21 +73,68 @@ void robot::stop() {
   rightMotor.stop();
 }
 
-void robot::junction(){
-  forward(lineSpeed);
-  delay(100);
-  stop();
+void robot::goBack() {
   ReadIR();
-  while (centerS == 1) {
-    turnRight();
-    ReadIR();
-
-  } while (centerS == 0) {
+  while (centerS == 0) {
     turnRight();
     ReadIR();
   }
-  count = 0;
-  
+
+}
+
+void robot::grabCup() {
+  centimeters = distanceSensor.measureDistanceCm();
+  Serial.println(centimeters);
+  if (centimeters > 7) {
+    claw.open();
+    delay(1000);
+    goBack();
+   
+  } else if (centimeters < 7 && centimeters > 0) {
+     claw.close();
+     delay(1000);
+     isThereCup = true;
+     goBack();
+
+  } 
+}
+
+void robot::junction() {
+  if (count == 1) {
+    forward(lineSpeed);
+    delay(200);   // 100
+    stop();
+    ReadIR();
+    while (centerS == 1) {
+      turnRight();
+      ReadIR();
+
+  } while (centerS == 0) {
+      turnRight();
+      ReadIR(); }
+
+    goBack();
+
+  } else if (count == 2) {
+      forward(255);
+      delay(200);   // 200
+      ReadIR();
+
+  } else if (count == 3) {
+    forward(lineSpeed);
+    delay(200);
+    ReadIR();
+    while (centerS == 1) {
+      turnLeft();
+      ReadIR();
+
+  } while (centerS == 0) {
+      turnLeft();
+      ReadIR();
+      count = 0;
+  }
+
+  }
 }
 
 void robot::followLine() {
@@ -114,10 +162,12 @@ void robot::followLine() {
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
     count++;
+    junction();
     ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     stop();
+    delay(2000);
     grabCup();
     ReadIR();
 
@@ -125,42 +175,3 @@ void robot::followLine() {
 
 }
 
-
-void robot::grabCup() {
-  centimeters = distanceSensor.measureDistanceCm();
-  Serial.println(centimeters);
-  if (centimeters > 7) {
-    claw.open();
-   
-  } else if (centimeters < 5) {
-    // delay(1000);
-    claw.close();
-    delay(1000);
-    goBack();
-
-  }
-}
-
-void robot::goBack() {
-  turnRight();
-
-}
-
-void robot::CheckForCup() {
-  centimeters = distanceSensor.measureDistanceCm();
-  // Serial.println(centimeters);
-  if (centimeters > 20) {
-    forward(lineSpeed);
-    grabCup();
-
-  } else if (centimeters < 20) {
-    turnRight();
-
-  }
-}
-
-
-// void robot::trashCollect() {
-//   followLine();
-//   if 
-// }

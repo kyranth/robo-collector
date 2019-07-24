@@ -29,10 +29,7 @@ void setup () {
 
 void loop() {
   rad.followLine();
-  if (rad.count == 1) {
-  rad.junction();
-
-  }
+ 
 
 }
 
