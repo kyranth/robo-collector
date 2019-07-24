@@ -22,7 +22,6 @@ sensor rightIR(A2);
 UltraSonicDistanceSensor distanceSensor(A4, A3);
 
 robot::robot(){
-
 }
 
 void robot::begin(){
@@ -49,15 +48,11 @@ void robot::clawClose () {
 void robot::forward(int driveSpeed) {
   leftMotor.forward(driveSpeed);
   rightMotor.forward(driveSpeed);
-  // Serial.println("---forward executed---");
-  // delay(10);
 }
 
 void robot::backward(int driveSpeed) {
   leftMotor.backward(driveSpeed);
   rightMotor.backward(driveSpeed);
-  // Serial.println("---backward executed---");
-  // delay(10);
 }
 
 void robot::turnRight() {
@@ -76,7 +71,6 @@ void robot::stop() {
 }
 
 void robot::followLine() {
-  int lineSpeed = 80;
   ReadIR();
   
   if(leftS == 0 && centerS == 1 && rightS == 0) {
@@ -92,12 +86,10 @@ void robot::followLine() {
     ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 1) {
-    // setColor(0, 0, 200);
     turnRight();
     ReadIR();
 
   } else if (leftS == 1 && centerS == 0 && rightS == 0) {
-    // setColor(200, 0, 0);
     turnLeft();
     ReadIR();
 
@@ -106,9 +98,7 @@ void robot::followLine() {
     ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
-    // setColor(200, 200, 200);
-    leftMotor.stop();
-    rightMotor.stop();
+    stop();
     ReadIR();
 
   }
@@ -131,15 +121,20 @@ void robot::grabCup() {
   }
 }
 
+void robot::goBack() {
+  turnRight();
+
+}
+
 void robot::CheckForCup() {
   centimeters = distanceSensor.measureDistanceCm();
-  Serial.println(centimeters);
+  // Serial.println(centimeters);
   if (centimeters > 20) {
     forward(lineSpeed);
     grabCup();
 
   } else if (centimeters < 20) {
-    backward(lineSpeed);
+    turnRight();
 
   }
 }
