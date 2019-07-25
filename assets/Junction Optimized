@@ -9,11 +9,9 @@ int leftS = 1;
 int centerS = 1;
 int rightS = 1;
 
-int houseNum = 0;
-
 byte clawState;
 byte cupState;
-byte elbowState;
+int houseNum = 0;
 
 int lineSpeed = 160;
 
@@ -74,28 +72,7 @@ void robot::stop() {
   rightMotor.stop();
 }
 
-//--------------------------------------------------------
-
-void robot::grabnLiftCup() {
-  grabCup();
-  if (cupState == 1) {
-    isThereCup();
-    elbow.close();
-    delay(1500);
-    elbow.stop();
-    clawOpen();
-    delay(1000);
-    elbow.open();
-    delay(1500);
-    elbow.stop();
-    clawOpen();
-    elbowState = 1;
-  } else {
-    goBack();
-  }
-  
-  
-}
+//-------------------------------------------------
 
 void robot::ReadIR() {
   leftS = leftIR.DRead();
@@ -118,8 +95,15 @@ void robot::goBack() {
   while (centerS == 0) {
     turnRight();
     ReadIR();
+    
   }
-  isThereCup(); // Check for cup status
+
+  if ((houseNum % 2) == 0) {
+       backward(lineSpeed);
+
+  } else {
+
+  }
 }
 
 void robot::grabCup() {
@@ -128,15 +112,13 @@ void robot::grabCup() {
   if (centimeters > 7) {
     claw.open();
     delay(1000);
-    //goBack();
+    goBack();
    
   } else if (centimeters < 7 && centimeters > 0) {
      claw.close();
-     delay(800);
-     claw.stop();
-     //goBack();
-     cupState = 1;
-
+     delay(1000);
+     isThereCup();
+     
   } 
 }
 
@@ -151,18 +133,17 @@ void robot::junction() {
       while (centerS == 1) {
         turnRight();
         ReadIR();
-
-    } while (centerS == 0) {
+      } while (centerS == 0) {
         turnRight();
         ReadIR(); 
-
       }
 
+      isThereCup(); // Check for cup status
       goBack();
       break;      // follow main line, hit 111 go to right junction and go back
     
     case 2:
-      forward(200);
+      forward(255);
       delay(JuncTime);
       ReadIR();
       break;    // while going back from the 1st junction, ignore 111
@@ -181,10 +162,61 @@ void robot::junction() {
         count = 0;  // reset junction count
       }
       break;     // While going back from the 2 junction, turnLeft for main line
+
   }
 }
 
 void robot::followLine() {
+  ReadIR();
+ 
+  if(leftS == 0 && centerS == 1 && rightS == 0) {
+    forward(lineSpeed);
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+      switch (cupState) {
+        case 0:
+
+          forward(lineSpeed);
+          ReadIR();
+          break;
+
+        case 1:
+          count++;
+          junction();
+          ReadIR();
+          break;
+      }
+      ReadIR();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
+      stop();
+      houseNum++;   // update house number for memory
+      delay(1000);
+      grabCup();
+      ReadIR();
+
+  } 
+
+}
+
+void robot::cupCollect() {
   ReadIR();
  
   if(leftS == 0 && centerS == 1 && rightS == 0) {
@@ -214,11 +246,13 @@ void robot::followLine() {
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     stop();
-    houseNum++;
     delay(2000);
-    grabnLiftCup();
+    grabCup();
     ReadIR();
 
-  } 
+  }
+}
+
+void robot::sortCup() {
 
 }

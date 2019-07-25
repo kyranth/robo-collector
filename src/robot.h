@@ -17,10 +17,14 @@ public:
 	void turnLeft();
 	void turnRight();
 	void stop();
+
+	void grabnLiftCup();
+	void isThereCup();
 	void ReadIR();
 	void grabCup();
 	void goBack();
 	void junction();
 	void followLine();
+	void cupCollect();
 	void sortCup();
 };
