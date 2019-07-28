@@ -18,8 +18,11 @@ public:
 	void turnRight();
 	void stop();
 
+	void readCupIR();
+	void whichCup();
+	void ultrasonicRead();
 	void grabnLiftCup();
-	void isThereCup();
+	void putBack();
 	void ReadIR();
 	void grabCup();
 	void goBack();
