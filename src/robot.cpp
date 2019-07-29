@@ -5,14 +5,14 @@
 #include <HCSR04.h>
 
 // Configuration
-int leftS = 1, centerS = 1, rightS = 1;
-int cupleftIR = 1, cuprightIR = 1;
-int rightCup = 0, leftCup = 0;
+byte leftS = 1, centerS = 1, rightS = 1;
+byte cupleftIR = 1, cuprightIR = 1;
+byte rightCup = 0, leftCup = 0;
 
-int junctionNum = 0, houseNum = 0;
+byte junctionNum = 0, houseNum = 0;
 
-int cupColor = 0;
-int lineSpeed = 200;
+byte cupColor = 0;
+byte lineSpeed = 180;
 
 
 byte blackCup, whiteCup, blackNwhite;
@@ -80,8 +80,8 @@ void robot::clawClose(int interval) {
   - right motor forward
    ---------------------------------------------------------------------------*/
 void robot::forward(int driveSpeed) {   
-  forward(driveSpeed);
-  forward(driveSpeed);
+  leftMotor.forward(driveSpeed);
+  rightMotor.forward(driveSpeed);
 }
 
 /*
@@ -89,8 +89,8 @@ void robot::forward(int driveSpeed) {
   - right motor backward
    ---------------------------------------------------------------------------*/
 void robot::backward(int driveSpeed) {    
-  backward(driveSpeed);
-  backward(driveSpeed);
+  leftMotor.backward(driveSpeed);
+  rightMotor.backward(driveSpeed);
 }
 
 /*
@@ -98,9 +98,9 @@ void robot::backward(int driveSpeed) {
   - right motor backward
    ---------------------------------------------------------------------------*/
 void robot::turnRight() {
-  byte speed = 255;   
-  forward(speed);
-  backward(speed);
+  byte speed = 200;
+  leftMotor.forward(speed);
+  rightMotor.backward(speed);
 }
 
 /*
@@ -108,9 +108,9 @@ void robot::turnRight() {
   - right motor forward
    ---------------------------------------------------------------------------*/
 void robot::turnLeft() {
-  byte speed = 255;   
-  backward(speed);
-  forward(speed);
+  byte speed = 200;
+  leftMotor.backward(speed);
+  rightMotor.forward(speed);
 }
 
 /*
@@ -118,8 +118,8 @@ void robot::turnLeft() {
   - right motor stop
    ---------------------------------------------------------------------------*/
 void robot::stop() {    
-  stop();
-  stop();
+  leftMotor.stop();
+  rightMotor.stop();
 }
 
 //****************************************************************************************************************************************************
@@ -168,7 +168,18 @@ void robot::ultrasonicRead() {
 }
 
 void robot::sortingArea() {
-  followLine();
+  if(count == 1) {
+    switch (cupColor) {
+    case 1:
+      forward(lineSpeed);
+
+      break;
+    
+    default:
+      break;
+    }
+
+  }
 
 }
 
@@ -177,11 +188,13 @@ void robot::remainingCup() {
   while(max(0, blackCup)) {
     // sortingArea();
     cupColor = 2;
+    cupState = 1;
 
   } while(max(0, whiteCup)) {
     // sortingArea();
     cupColor = 3;
-  } 
+    cupState = 1;
+  }
    ultrasonicRead();
 }
 
@@ -203,7 +216,7 @@ void robot::grabCup() {
   ultrasonicRead();
   readCupIR();
   if (centimeters > 7) {
-    clawOpen(1000);
+    clawOpen(500);
     ultrasonicRead();
     readCupIR();
 
@@ -306,10 +319,11 @@ void robot::goBack() {
   ReadIR();
   backward(speed);
   delay(200);
-  while (leftS == 0) {
+  while (rightS == 0) {
     turnRight();
     ReadIR();
   }
+  lineSpeed = 180;
 }
 
 /*
@@ -325,15 +339,16 @@ void robot::junction() {
       delay(JuncTime);
       stop();
       ReadIR();
+      
       while (centerS == 1) {
         turnRight();
         ReadIR();
 
     } while (centerS == 0) {
         turnRight();
-        ReadIR(); 
-
-      }
+        ReadIR();
+        
+    }
       goBack();
       break;      // follow main line, hit 111 go to right junction and go back
     
@@ -341,6 +356,7 @@ void robot::junction() {
       forward(200);
       delay(JuncTime);
       ReadIR();
+      lineSpeed = 100;
       break;    // while going back from the 1st junction, ignore 111
       
     case 3:
@@ -390,13 +406,14 @@ void robot::followLine() {
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
     count++;
+    lineSpeed = 100;
     junction();
     ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
     stop();
     houseNum++;
-    delay(1000);
+    delay(500);
     ultrasonicRead();
     grabnLiftCup();
     ReadIR();

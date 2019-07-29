@@ -19,7 +19,6 @@ public:
 	void stop();
 
 	void readCupIR();
-	void whichCup();
 	void ultrasonicRead();
 	void grabnLiftCup();
 	void putBack();
