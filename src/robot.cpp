@@ -10,11 +10,12 @@ int cupleftIR = 1, cuprightIR = 1;
 int rightCup = 0, leftCup = 0;
 
 int junctionNum = 0, houseNum = 0;
-int cupColor = 0;
 
+int cupColor = 0;
 int lineSpeed = 200;
 
-unsigned long time;
+
+byte blackCup, whiteCup, blackNwhite;
 
 byte clawState;
 byte cupState;
@@ -56,8 +57,10 @@ void robot::begin(){
   - open claw
   - clawState = 0
    ---------------------------------------------------------------------------*/
-void robot::clawOpen() {
+void robot::clawOpen(int interval) {
   claw.open();
+  delay(interval);
+  claw.stop();
   clawState = 0;
 } 
 
@@ -65,8 +68,10 @@ void robot::clawOpen() {
   - close claw
   - clawState = 0
    ---------------------------------------------------------------------------*/
-void robot::clawClose () {
+void robot::clawClose(int interval) {
   claw.close();
+  delay(interval);
+  claw.stop();
   clawState = 1;
 }
 
@@ -74,18 +79,18 @@ void robot::clawClose () {
   - left motor forward
   - right motor forward
    ---------------------------------------------------------------------------*/
-void robot::forward(int driveSpeed) {
-  leftMotor.forward(driveSpeed);
-  rightMotor.forward(driveSpeed);
+void robot::forward(int driveSpeed) {   
+  forward(driveSpeed);
+  forward(driveSpeed);
 }
 
 /*
   - left motor backward
   - right motor backward
    ---------------------------------------------------------------------------*/
-void robot::backward(int driveSpeed) {
-  leftMotor.backward(driveSpeed);
-  rightMotor.backward(driveSpeed);
+void robot::backward(int driveSpeed) {    
+  backward(driveSpeed);
+  backward(driveSpeed);
 }
 
 /*
@@ -93,8 +98,9 @@ void robot::backward(int driveSpeed) {
   - right motor backward
    ---------------------------------------------------------------------------*/
 void robot::turnRight() {
-  leftMotor.forward(200);
-  rightMotor.backward(200);
+  byte speed = 255;   
+  forward(speed);
+  backward(speed);
 }
 
 /*
@@ -102,17 +108,18 @@ void robot::turnRight() {
   - right motor forward
    ---------------------------------------------------------------------------*/
 void robot::turnLeft() {
-  leftMotor.backward(200);
-  rightMotor.forward(200);
+  byte speed = 255;   
+  backward(speed);
+  forward(speed);
 }
 
 /*
   - left motor stop
   - right motor stop
    ---------------------------------------------------------------------------*/
-void robot::stop() {
-  leftMotor.stop();
-  rightMotor.stop();
+void robot::stop() {    
+  stop();
+  stop();
 }
 
 //****************************************************************************************************************************************************
@@ -120,7 +127,7 @@ void robot::stop() {
 /*
   - stand
   - blocking function
-   ---------------------------------------------------------------------------*/
+*/
 void robot::ReadIR() {
   leftS = leftIR.DRead();
   centerS = centerIR.DRead();
@@ -134,14 +141,18 @@ void robot::readCupIR() {
   if (rightCup == 1 && leftCup == 1) { // Black = Plastic
     // go to platic
     cupColor = 1;
+    blackCup++;
   }
   else if (leftCup == 0 && rightCup == 0) { // White = Paper
     // go to paper
     cupColor = 2;
+    whiteCup++;
   }
   else if ((leftCup == 1 && rightCup == 0) || (leftCup == 0 && rightCup == 1)){   // Black & White = Everything else
     // go to everything else
     cupColor = 3;
+    blackNwhite++;
+
   } else {
     cupColor = 0;
 
@@ -153,59 +164,97 @@ void robot::readCupIR() {
    ---------------------------------------------------------------------------*/
 void robot::ultrasonicRead() {
   centimeters = distanceSensor.measureDistanceCm();
-  Serial.println(centimeters);
+  // Serial.println(centimeters);
+}
+
+void robot::sortingArea() {
+  followLine();
+
+}
+
+void robot::remainingCup() {
+  readCupIR();
+  while(max(0, blackCup)) {
+    // sortingArea();
+    cupColor = 2;
+
+  } while(max(0, whiteCup)) {
+    // sortingArea();
+    cupColor = 3;
+  } 
+   ultrasonicRead();
 }
 
 /*
-  - stand
-  - blocking function
+  - Checks to see if there is a cup in front of the robot
+  - Checks to see what type of cup is in front of the robot
+  - If nothing is within 7 cm, the claw opens
+  - The claw opens for 1 sec
+  - If something is within 7 cm, the claw closes
+  - The claw closes for 200 ms
+  - When cupState is 1, the robot is lifting the cup
+  - Case 1 checks to see if there are black cups (plastic)
+  - Case 2 checks to see if there are white cups (paper)
+  - Case 3 checks to see if there are black and white cups (everything else)
+  - Default checks to see if there are no cups (the robot goes back and looks for cups)
    ---------------------------------------------------------------------------*/
 void robot::grabCup() {
+  byte speed = 100;
   ultrasonicRead();
   readCupIR();
   if (centimeters > 7) {
-    claw.open();
-    delay(1000);
-    claw.stop();
+    clawOpen(1000);
     ultrasonicRead();
     readCupIR();
 
   } else if (centimeters < 7 && centimeters > 0) {
      switch (cupColor) {
-      case 1:
-        claw.close();
-        delay(200);
-        claw.stop();
+      case 1:     //Black
+        clawClose(200);
         cupState = 1;
-        readCupIR();
-        ultrasonicRead();
+        // remainingCup();
         break;
 
-      case 2:
+      case 2:    // white
+        backward(speed);
+        delay(200);
+
+        // remainingCup();
         goBack();
-        readCupIR();
-        ultrasonicRead();
         break;
 
-      case 3:
+      case 3:   //Back & White
+        backward(speed);
+        delay(200);
+
+        // remainingCup();
         goBack();
-        readCupIR();
-        ultrasonicRead();
         break;
 
-      default:
+      default:  //No cups 
+        backward(speed);
+        delay(200);
+
+        // remainingCup();
         goBack();
-        readCupIR();
-        ultrasonicRead();
         break;
      }
 
   }
+
 }
 
 /*
-  - Grab cup if within 7 cm
-  - Lift cup upto the holder
+  - Grabs cup if within 7 cm
+  - Lifts cup upto the holder
+  - Elbow open is when the arm is lifted up
+  - Elbow close is when the arm is in its regular position
+  - Elbow stop is when the arm stops moving
+  - The elbow opens for 1.5 secs
+  - The elbow closes for 1.5 secs
+  - The elbow stops for 1.5 secs
+  - The claw opens for 1 sec
+  - This function is executed after the grab cup function is executed
    ---------------------------------------------------------------------------*/
 void robot::grabnLiftCup() {
   grabCup();
@@ -213,12 +262,11 @@ void robot::grabnLiftCup() {
     elbow.close();
     delay(1500);
     elbow.stop();
-    clawOpen();
-    delay(1000);
+    clawOpen(1000);
     elbow.open();
     delay(1500);
     elbow.stop();
-    clawOpen();
+    clawOpen(1000);
     elbowState = 1;
     cupState = 0;
     readCupIR();
@@ -241,23 +289,24 @@ void robot::putBack() {
   elbow.close();
   delay(2500);
   elbow.stop();
-  clawClose();
-  delay(1000);
+  clawClose(1000);
   elbow.open();
   delay(2000);
   elbow.stop();
-  clawOpen();
-  delay(1000);
+  clawOpen(1000);
 
 }
 
 /*
   - stand
   - blocking function
-   ---------------------------------------------------------------------------*/
+*/
 void robot::goBack() {
+  byte speed = 100;
   ReadIR();
-  while (centerS == 0) {
+  backward(speed);
+  delay(200);
+  while (leftS == 0) {
     turnRight();
     ReadIR();
   }
@@ -266,7 +315,7 @@ void robot::goBack() {
 /*
   - stand
   - blocking function
-   ---------------------------------------------------------------------------*/
+*/
 void robot::junction() {
   int JuncTime = 200;
   switch (count) {
@@ -310,6 +359,7 @@ void robot::junction() {
       break;     // While going back from the 2 junction, turnLeft for main line
   }
 }
+
 
 /*
   - stand

@@ -10,8 +10,8 @@ public:
 	int centimeters;
 	robot();
 	void begin();
-	void clawOpen();
-	void clawClose();
+	void clawOpen(int interval);
+	void clawClose(int interval);
 	void forward(int driveSpeed);
 	void backward(int driveSpeed);
 	void turnLeft();
@@ -26,8 +26,10 @@ public:
 	void ReadIR();
 	void grabCup();
 	void goBack();
+	void sortingArea();
 	void junction();
+	void remainingCup();
 	void followLine();
 	void cupCollect();
-	void sortCup();
+	
 };

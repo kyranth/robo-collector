@@ -1,5 +1,5 @@
 /************************************************************************************************************************************************************************                                              
- * - Author               : Shafiqur Khan, Lena Khoshrof
+ * - Author               : Shafiqur Khan, Lena Khoshrof, John (Yanni) Kitsios
  * - Main purpose         : iTEST Activity                                                                               
  * - Copyright (c) holder : All rights reserved
  * - License              : iTEST 
@@ -23,10 +23,10 @@
 
 
 /*
-    JEFF BOB THE 3RD(Clawbot)
+    RAD(Clawbot)
     TEAM: {
-      Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
-      Lena Khosrof, Yanni, Dushan Persaud
+      Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nischal Thapa
+      Lena Khosrof, John (Yanni) Kitsios, Dushan Persaud
     }
 
     Configuration:
