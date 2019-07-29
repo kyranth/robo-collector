@@ -9,10 +9,12 @@ int leftS = 1, centerS = 1, rightS = 1;
 int cupleftIR = 1, cuprightIR = 1;
 int rightCup = 0, leftCup = 0;
 
-int houseNum = 0;
+int junctionNum = 0, houseNum = 0;
 int cupColor = 0;
 
 int lineSpeed = 200;
+
+unsigned long time;
 
 byte clawState;
 byte cupState;
@@ -269,6 +271,7 @@ void robot::junction() {
   int JuncTime = 200;
   switch (count) {
     case 1:
+      junctionNum++;
       forward(lineSpeed);
       delay(JuncTime);
       stop();
