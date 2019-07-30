@@ -27,6 +27,7 @@ public:
 	void ReadIR();
 	void grabCup();
 	void goBack();
+	void sortingArea();
 	void gotoSorting();
 	void startAgain();
 	void junction();

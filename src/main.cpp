@@ -51,7 +51,7 @@ void setup () {
 
 
 void loop() {
-  rad.sortCup();
+  rad.followLine();
 
 }
 

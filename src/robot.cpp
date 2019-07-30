@@ -81,13 +81,13 @@ void robot::backward(int driveSpeed) {
 }
 
 void robot::turnRight() {
-  byte speed = 180;
+  byte speed = 200;
   leftMotor.forward(speed);
   rightMotor.backward(speed);
 }
 
 void robot::turnLeft() {
-  byte speed = 180;
+  byte speed = 200;
   leftMotor.backward(speed);
   rightMotor.forward(speed);
 }
@@ -147,28 +147,33 @@ void robot::putBack() {
 
 }
 
-void robot::gotoSorting() {
-  if (houseNum == (maxHouse + 2) && blackCup > 0) {
-    readCupIR();
+void robot::sortingArea() {
+  readCupIR();
     if(count == 1) {
       switch(cupColor) {
       case 1:
+        // followLine(0);
         stop();
         putBack();
         break;
 
       case 2:
         turnRight();
-        followLine();
+        // followLine(0);
 
       case 3:
         turnLeft();
-        followLine();
+        // followLine(0);
     
       default:
         break;
       }
     }
+}
+
+void robot::gotoSorting() {
+  if (houseNum == (maxHouse + 2) && blackCup > 0) {
+    sortingArea();
   }
 }
 
@@ -262,7 +267,6 @@ void robot::grabnLiftCup() {
     ultrasonicRead();
 
   }
-  
 }
 
 void robot::startAgain() {
@@ -300,14 +304,14 @@ void robot::junction() {
         ReadIR();
         
     }
-      lineSpeed = 80;
+      lineSpeed = 100;
       break;      // follow main line, hit 111 go to right junction and go back
     
     case 2:
       forward(lineSpeed);
       myDelay(JuncTime);
       ReadIR();
-      lineSpeed = 80;
+      lineSpeed = 100;
       break;    // while going back from the 1st junction, ignore 111
       
     case 3:
@@ -351,6 +355,7 @@ void robot::followLine() {
 
   } else if (leftS == 1 && centerS == 1 && rightS == 1) {
     count++;
+    junction();
     ReadIR();
 
   } else if (leftS == 0 && centerS == 0 && rightS == 0) {
@@ -359,12 +364,6 @@ void robot::followLine() {
     ultrasonicRead();
     ReadIR();
     grabnLiftCup();
-  } 
 
-}
-
-void robot::sortCup() {
-  followLine();
-  junction();
-  
+  }
 }
