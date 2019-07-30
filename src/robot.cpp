@@ -34,8 +34,7 @@ sensor cupSensorLeft(12);
 
 UltraSonicDistanceSensor distanceSensor(A4, A3);
 
-robot::robot(){
-}
+robot::robot(){ }
 
 void robot::myDelay(int del) {
   unsigned long myPrevMillis = millis();
