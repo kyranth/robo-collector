@@ -9,6 +9,7 @@ public:
 	int count = 0;
 	int centimeters;
 	robot();
+	void myDelay(int del);
 	void begin();
 	void clawOpen(int interval);
 	void clawClose(int interval);
@@ -30,5 +31,5 @@ public:
 	void remainingCup();
 	void followLine();
 	void cupCollect();
-	
+	void garbageCollector();
 };

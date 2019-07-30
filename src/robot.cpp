@@ -37,6 +37,11 @@ UltraSonicDistanceSensor distanceSensor(A4, A3);
 robot::robot(){
 }
 
+void robot::myDelay(int del) {
+  unsigned long myPrevMillis = millis();
+  while (millis()- myPrevMillis <= del);
+}
+
 /*
   - Baud rate: 9600
   - open claw
@@ -47,9 +52,9 @@ void robot::begin(){
 	Serial.println("Robot Ready");
 
   claw.close();
-  delay(500);
+  myDelay(500);
   claw.open();
-  delay(1500);
+  myDelay(1500);
   claw.stop();
 }
 
@@ -117,7 +122,7 @@ void robot::turnLeft() {
   - left motor stop
   - right motor stop
    ---------------------------------------------------------------------------*/
-void robot::stop() {    
+void robot::stop() {
   leftMotor.stop();
   rightMotor.stop();
 }
@@ -167,21 +172,6 @@ void robot::ultrasonicRead() {
   // Serial.println(centimeters);
 }
 
-void robot::sortingArea() {
-  if(count == 1) {
-    switch (cupColor) {
-    case 1:
-      forward(lineSpeed);
-
-      break;
-    
-    default:
-      break;
-    }
-
-  }
-
-}
 
 void robot::remainingCup() {
   readCupIR();
@@ -302,11 +292,11 @@ void robot::putBack() {
   elbow.close();
   delay(2500);
   elbow.stop();
-  clawClose(1000);
+  clawClose(800);
   elbow.open();
   delay(2000);
   elbow.stop();
-  clawOpen(1000);
+  clawOpen(800);
 
 }
 
@@ -318,7 +308,7 @@ void robot::goBack() {
   byte speed = 100;
   ReadIR();
   backward(speed);
-  delay(200);
+  delay(180);
   while (rightS == 0) {
     turnRight();
     ReadIR();
@@ -376,6 +366,29 @@ void robot::junction() {
   }
 }
 
+void robot::sortingArea() {
+  if(count == 1) {
+    switch (cupColor) {
+    case 1:
+      stop();
+      putBack();
+      break;
+
+    case 2:
+      turnRight();
+      followLine();
+
+    case 3:
+      turnLeft();
+      followLine();
+    
+    default:
+      break;
+    }
+
+  }
+
+}
 
 /*
   - stand
@@ -383,7 +396,6 @@ void robot::junction() {
    ---------------------------------------------------------------------------*/
 void robot::followLine() {
   ReadIR();
- 
   if(leftS == 0 && centerS == 1 && rightS == 0) {
     forward(lineSpeed);
     ReadIR();
