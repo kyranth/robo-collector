@@ -11,6 +11,7 @@ public:
 	robot();
 	void myDelay(int del);
 	void begin();
+	void countHouse();
 	void clawOpen(int interval);
 	void clawClose(int interval);
 	void forward(int driveSpeed);
@@ -26,10 +27,10 @@ public:
 	void ReadIR();
 	void grabCup();
 	void goBack();
-	void sortingArea();
+	void gotoSorting();
+	void startAgain();
 	void junction();
-	void remainingCup();
 	void followLine();
-	void cupCollect();
-	void garbageCollector();
+	void sortCup();
+	
 };
