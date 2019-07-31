@@ -6,12 +6,11 @@ class robot {
 private:
 
 public:
-	int count = 0;
-	int centimeters;
+	int counter = 0, centimeters;
 	robot();
-	void myDelay(int del);
+	void myDelay(unsigned long del);
 	void begin();
-	void countHouse();
+	void juncCheck();
 	void clawOpen(int interval);
 	void clawClose(int interval);
 	void forward(int driveSpeed);
@@ -20,18 +19,15 @@ public:
 	void turnRight();
 	void stop();
 
+	void ReadIR();
 	void readCupIR();
 	void ultrasonicRead();
-	void grabnLiftCup();
+	void grab_N_LiftCup();
 	void putBack();
-	void ReadIR();
 	void grabCup();
 	void goBack();
-	void sortingArea();
-	void gotoSorting();
-	void startAgain();
+	void getOut();
+	void inSorting();
 	void junction();
 	void followLine();
-	void sortCup();
-	
 };
