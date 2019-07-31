@@ -5,13 +5,15 @@
 #include <HCSR04.h>
 
 // Configuration
-byte leftS = 1, centerS = 1, rightS = 1;
+bool juncState;
+byte leftS = 1, centerS = 1, rightS = 1, jIR = 1;
 byte cupleftIR = 1, cuprightIR = 1;
 byte rightCup = 0, leftCup = 0;
 
 byte juncNum = 0, lap = 0;
 byte cupColor = 0;
-byte lineSpeed = 150, juncMax = 12;
+byte lineSpeed = 180;
+const byte juncMax = 6;
 
 byte blackCup = 0, whiteCup = 0, black_N_whiteCup = 0;
 byte clawState, cupState, elbowState;
@@ -24,6 +26,7 @@ motor claw(7, 8);
 sensor leftIR(A0);
 sensor centerIR(A1);
 sensor rightIR(A2);
+sensor junctionIR(A5);
 sensor cupSensorRight(11);
 sensor cupSensorLeft(12);
 
@@ -46,6 +49,7 @@ void robot::begin(){
   claw.open();
   myDelay(1500);
   claw.stop();
+  juncState = true;
 }
 
 void robot::juncCheck() {
@@ -80,13 +84,13 @@ void robot::backward(int driveSpeed) {
 }
 
 void robot::turnRight() {
-  byte speed = 200;
+  byte speed = 250;
   leftMotor.forward(speed);
   rightMotor.backward(speed);
 }
 
 void robot::turnLeft() {
-  byte speed = 200;
+  byte speed = 250;
   leftMotor.backward(speed);
   rightMotor.forward(speed);
 }
@@ -102,6 +106,7 @@ void robot::ReadIR() {
   leftS = leftIR.DRead();
   centerS = centerIR.DRead();
   rightS = rightIR.DRead();
+  jIR = junctionIR.DRead();
 }
 
 void robot::readCupIR() {
@@ -162,13 +167,13 @@ void robot::getOut() {
     }
     followLine();
   }
-
 }
 
 void robot::inSorting() {
-  if (juncNum == juncMax && blackCup > 0) {
+  if (juncNum == (juncMax + 1) && blackCup > 0) {
     readCupIR();
     if (counter == 1) {
+      juncState = false;
       stop();
       putBack();
       counter = 4;
@@ -228,7 +233,7 @@ void robot::grabCup() {
         break;
 
       case 3:
-        //Back & White cup
+        //Black & White cup
         if (lap == 3) {
           clawClose(200);
           cupState = 1;
@@ -296,74 +301,108 @@ void robot::goBack() {
     turnRight();
     ReadIR();
   }
-  followLine();
   lineSpeed = 180;
 }
 
 void robot::junction() {
-  // int JuncTime = 0;
-  followLine();
+  Serial.println("Junction");
   switch (counter) {
     case 1:
       juncCheck();
       inSorting();
-      // forward(lineSpeed);
-      // myDelay(JuncTime);
-      // stop();
       ReadIR();
-      while (leftS == 1) {
-        leftMotor.forward(200);
+      while (jIR == 0) {
+        forward(lineSpeed);
+        ReadIR();
+      } 
+      stop();
+      myDelay(5);
+      while (centerS == 1) {
+        turnRight();
         ReadIR();
       }
+      stop();
+      myDelay(5);
+
+      while (centerS == 0) {
+        turnRight();
+        ReadIR();
+      }
+      stop();
+      myDelay(5);
+
       lineSpeed = 100;
       break;      // follow main line, hit 111 go to right junction and go back
     
     case 2:
-      forward(lineSpeed);
-      // myDelay(JuncTime);
+      while(centerS == 1) {
+        forward(lineSpeed);
+        ReadIR();  
+      }
+      // stop();
+      myDelay(5);
       ReadIR();
       lineSpeed = 100;
       break;    // while going back from the 1st junction, ignore 111
       
     case 3:
-      // forward(lineSpeed);
-      // myDelay(JuncTime);
       ReadIR();
-      while(rightS == 1) {
-        rightMotor.forward(200);
+      while (jIR == 0) {
+        forward(lineSpeed);
+        ReadIR();
+      } 
+      stop();
+      myDelay(5);
+      while (centerS == 1) {
+        turnLeft();
         ReadIR();
       }
+      stop();
+      myDelay(5);
+
+      while (centerS == 0) {
+        turnLeft();
+        ReadIR();
+      }
+      stop();
+      myDelay(5);
+      counter = 0;
+      lineSpeed = 180;
+
       break;          // While going back from the 2 junction, turnLeft for main line
   }
 }
 
 void robot::followLine() {
   ReadIR();
-  if(leftS == 0 && centerS == 1 && rightS == 0) {
+  while(leftS == 0 && centerS == 1 && rightS == 0) {
     forward(lineSpeed);
     ReadIR();
-
-  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
+  }
+  stop();
+  myDelay(5);
+  while (leftS == 0 && rightS == 1) {
     turnRight();
     ReadIR();
-
-  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
+  } 
+  stop();
+  myDelay(5);
+  while (leftS == 1 && rightS == 0) {
     turnLeft();
     ReadIR();
-
-  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
-    leftMotor.forward(lineSpeed);  // turnRight
-    ReadIR();
-
-  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
-    rightMotor.forward(lineSpeed); // turnLeft
-    ReadIR();
-
-  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+  }
+  stop();
+  myDelay(5);
+  if (leftS == 1 && centerS == 1 && rightS == 1) {
     counter++;
+    Serial.println(counter);
+    myDelay(100);
+    if (juncState == true) {
+      junction();
+    }
     ReadIR();
-
-  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
+  }
+  if (leftS == 0 && centerS == 0 && rightS == 0) {
     stop();
     myDelay(500);
     ultrasonicRead();

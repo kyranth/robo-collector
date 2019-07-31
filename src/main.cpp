@@ -51,7 +51,7 @@ void setup () {
 
 
 void loop() {
-  rad.junction();
+  rad.followLine();
 
 }
 
