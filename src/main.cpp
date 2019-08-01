@@ -23,7 +23,7 @@
 
 
 /*
-    RAD(Clawbot)
+    Scorpion(Clawbot)
     TEAM: {
       Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nischal Thapa
       Lena Khosrof, John (Yanni) Kitsios, Dushan Persaud
@@ -42,16 +42,16 @@
 #include "robot.h"
 
 
-robot rad;
+robot scorpion;
 
 void setup () {
-  rad.begin();
+  scorpion.begin();
 
 }
 
 
 void loop() {
-  rad.followLine();
+  scorpion.followLine();
 
 }
 

@@ -10,7 +10,7 @@ public:
 	robot();
 	void myDelay(unsigned long del);
 	void begin();
-	void juncCheck();
+	void jCount();
 	void clawOpen(int interval);
 	void clawClose(int interval);
 	void forward(int driveSpeed);
@@ -24,10 +24,12 @@ public:
 	void ultrasonicRead();
 	void grab_N_LiftCup();
 	void putBack();
+	void getCupData();
 	void grabCup();
 	void goBack();
 	void getOut();
 	void inSorting();
 	void junction();
 	void followLine();
+	void printArr();
 };
