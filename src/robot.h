@@ -16,7 +16,9 @@ public:
 	void forward(int driveSpeed);
 	void backward(int driveSpeed);
 	void turnLeft();
+	void hardLeft();
 	void turnRight();
+	void hardRight();
 	void stop();
 
 	void ReadIR();
@@ -32,4 +34,5 @@ public:
 	void junction();
 	void followLine();
 	void printArr();
+	void junctionStatus();
 };

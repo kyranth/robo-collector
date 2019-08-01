@@ -6,27 +6,28 @@
 
 // Configuration
 bool juncState;
-byte lineSpeed = 180;
-const int juncMax = 6, subJunc = 2;
+byte lineSpeed = 160;
+byte newSpeed = 160;
+const int juncMax = 2, subJunc = 2;
 int junctionArr[juncMax][subJunc];
 
-byte leftS = 1, 
-centerS = 1, 
-rightS = 1, 
-jIR = 1;
+byte leftS = 1,
+     centerS = 1,
+     rightS = 1,
+     jIR = 1;
 byte cupleftIR = 1, cuprightIR = 1;
 byte rightCup = 0, leftCup = 0;
-byte juncNum = 0, 
-lap = 0;
+byte juncNum = 0,
+     lap = 0;
 
 byte cupColor = 0,
-blackCup = 0, 
-whiteCup = 0, 
-black_N_whiteCup = 0;
+     blackCup = 0,
+     whiteCup = 0,
+     black_N_whiteCup = 0;
 
-byte clawState, 
-cupState, 
-elbowState;
+byte clawState,
+    cupState,
+    elbowState;
 
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
@@ -42,15 +43,18 @@ sensor cupSensorLeft(12);
 
 UltraSonicDistanceSensor distanceSensor(A4, A3);
 
-robot::robot(){ }
+robot::robot() {}
 
-void robot::myDelay(unsigned long del) {
+void robot::myDelay(unsigned long del)
+{
   unsigned long myPrevMillis = millis();
-  while (millis()- myPrevMillis <= del);
+  while (millis() - myPrevMillis <= del)
+    ;
 }
 
-void robot::begin(){
-	Serial.begin(9600);
+void robot::begin()
+{
+  Serial.begin(9600);
   pinMode(13, OUTPUT);
   juncState = true;
   Serial.println("Initiating Matrix...");
@@ -64,90 +68,160 @@ void robot::begin(){
   Serial.println("Robot Ready");
 }
 
-void robot::jCount() {
+void robot::jCount()
+{
   juncNum++;
   Serial.println(juncNum);
 }
 
-void robot::clawOpen(int interval) {
+void robot::clawOpen(int interval)
+{
   claw.open();
   myDelay(interval);
   claw.stop();
   clawState = 0;
-} 
+}
 
-void robot::clawClose(int interval) {
+void robot::clawClose(int interval)
+{
   claw.close();
   myDelay(interval);
   claw.stop();
   clawState = 1;
 }
 
-void robot::forward(int driveSpeed) {   
+void robot::forward(int driveSpeed)
+{
   leftMotor.forward(driveSpeed);
   rightMotor.forward(driveSpeed);
 }
 
-void robot::backward(int driveSpeed) {    
+void robot::backward(int driveSpeed)
+{
   leftMotor.backward(driveSpeed);
   rightMotor.backward(driveSpeed);
 }
 
-void robot::turnRight() {
-  byte speed = 250;
+void robot::turnRight()
+{
+  byte speed = 200;
   leftMotor.forward(speed);
   rightMotor.backward(speed);
 }
 
-void robot::turnLeft() {
-  byte speed = 250;
+void robot::hardRight()
+{
+  while (jIR == 0)
+  {
+    forward(lineSpeed);
+    ReadIR();
+  }
+  stop();
+  myDelay(5);
+  while (centerS == 1)
+  {
+    turnRight();
+    ReadIR();
+  }
+  stop();
+  myDelay(5);
+
+  while (centerS == 0)
+  {
+    turnRight();
+    ReadIR();
+  }
+  stop();
+  myDelay(5);
+  lineSpeed = 100;
+}
+
+void robot::turnLeft()
+{
+  byte speed = 200;
   leftMotor.backward(speed);
   rightMotor.forward(speed);
 }
 
-void robot::stop() {
+void robot::hardLeft()
+{
+  while (jIR == 0)
+    {
+      forward(lineSpeed);
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+    while (centerS == 1)
+    {
+      turnLeft();
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+
+    while (centerS == 0)
+    {
+      turnLeft();
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+    counter = 0;
+    lineSpeed = newSpeed;
+}
+
+void robot::stop()
+{
   leftMotor.stop();
   rightMotor.stop();
 }
 
 //****************************************************************************************************************************************************
 
-void robot::ReadIR() {
+void robot::ReadIR()
+{
   leftS = leftIR.DRead();
   centerS = centerIR.DRead();
   rightS = rightIR.DRead();
   jIR = junctionIR.DRead();
 }
 
-void robot::readCupIR() {
+void robot::readCupIR()
+{
   rightCup = cupSensorRight.DRead();
   leftCup = cupSensorLeft.DRead();
 
-  if (rightCup == 1 && leftCup == 1) { // Black = Plastic
+  if (rightCup == 1 && leftCup == 1)
+  { // Black = Plastic
     // go to platic
     cupColor = 1;
     blackCup++;
-  } else if (leftCup == 0 && rightCup == 0) { // White = Paper
+  }
+  else if (leftCup == 0 && rightCup == 0)
+  { // White = Paper
     // go to paper
     cupColor = 2;
     whiteCup++;
   }
-  else if ((leftCup == 1 && rightCup == 0) || (leftCup == 0 && rightCup == 1)){   // Black & White = Everything else
+  else if ((leftCup == 1 && rightCup == 0) || (leftCup == 0 && rightCup == 1))
+  { // Black & White = Everything else
     // go to everything else
     cupColor = 3;
     black_N_whiteCup++;
   } else {
     cupColor = 0;
-
   }
 }
 
-void robot::ultrasonicRead() {
+void robot::ultrasonicRead()
+{
   centimeters = distanceSensor.measureDistanceCm();
   // Serial.println(centimeters);
 }
 
-void robot::putBack() {
+void robot::putBack()
+{
   elbow.close();
   myDelay(1550);
   elbow.stop();
@@ -156,28 +230,58 @@ void robot::putBack() {
   myDelay(1250);
   elbow.stop();
   clawOpen(800);
-
 }
 
-void robot::getOut() {
+void robot::getOut()
+{
   goBack();
-  if (counter == 1) {
-    forward(lineSpeed);
-    myDelay(100);
 
-  } if (counter == 3) {
-    while (leftS == 1) {
-      turnRight();
-      counter = 0;
+  ReadIR();
+  if (counter == 1)
+  {
+    while (leftS == 0 && centerS == 1 && rightS == 0)
+    {
+      forward(lineSpeed);
+      ReadIR();
     }
+    stop();
+    myDelay(5);
+  }
+  if (counter == 2)
+  {
+    while (jIR == 0)
+    {
+      forward(lineSpeed);
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+    while (centerS == 1)
+    {
+      turnRight();
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+
+    while (centerS == 0)
+    {
+      turnRight();
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
   }
 }
 
-void robot::inSorting() {
-  if (juncNum == (juncMax + 1) && blackCup > 0) {
+void robot::inSorting()
+{
+  if (juncNum == (juncMax + 1) && blackCup > 0)
+  {
     juncState = false;
     ReadIR();
-    while (centerS == 1) {
+    while (centerS == 1)
+    {
       forward(lineSpeed);
       ReadIR();
     }
@@ -186,86 +290,108 @@ void robot::inSorting() {
 
     putBack();
     printArr();
-      // lap = 2;
-      // getOut();
-    ReadIR();
+    lap = 2;
+    counter = 0;
+    getOut();
+    printArr();
     exit(0);
-
-  } else if (juncNum == (juncMax + 1) && whiteCup > 0) {
+    ReadIR();
+  }
+  else if (juncNum == (juncMax + 1) && whiteCup > 0)
+  {
     juncState = false;
-    if (counter == 1) {
+    if (counter == 1)
+    {
       // directions
       juncState = false;
-      while (rightS == 0) {
+      while (rightS == 0)
+      {
         forward(lineSpeed);
         ReadIR();
       }
       stop();
       myDelay(5);
 
-      if (counter == 2) {
-        while (jIR == 0) {
+      if (counter == 2)
+      {
+        while (jIR == 0)
+        {
           forward(lineSpeed);
           ReadIR();
-        } 
+        }
         stop();
         myDelay(5);
-        while (centerS == 1) {
+        while (centerS == 1)
+        {
           turnRight();
           ReadIR();
         }
         stop();
         myDelay(5);
-        while (centerS == 0) {
+        while (centerS == 0)
+        {
           turnRight();
           ReadIR();
         }
         stop();
         myDelay(5);
       }
-    
+
       putBack();
       getOut();
       lap = 3;
-    } else { }
-
-  } else if (juncNum == (juncMax + 1) && black_N_whiteCup > 0) {
-    if (counter == 1) {
+    }
+    else
+    {
+    }
+  }
+  else if (juncNum == (juncMax + 1) && black_N_whiteCup > 0)
+  {
+    if (counter == 1)
+    {
       // directions
       juncState = false;
-      while (leftS == 0) {
+      while (leftS == 0)
+      {
         forward(lineSpeed);
         ReadIR();
       }
       stop();
       myDelay(5);
 
-      if (counter == 2) {
+      if (counter == 2)
+      {
         ReadIR();
-        while (jIR == 0) {
+        while (jIR == 0)
+        {
           forward(lineSpeed);
           ReadIR();
-      } 
-      stop();
-      myDelay(5);
-      while (centerS == 1) {
-        turnLeft();
-        ReadIR();
-      }
-      stop();
-      myDelay(5);
+        }
+        stop();
+        myDelay(5);
+        while (centerS == 1)
+        {
+          turnLeft();
+          ReadIR();
+        }
+        stop();
+        myDelay(5);
 
-      while (centerS == 0) {
-        turnLeft();
-        ReadIR();
+        while (centerS == 0)
+        {
+          turnLeft();
+          ReadIR();
+        }
+        stop();
+        myDelay(5);
       }
-      stop();
-      myDelay(5);
-      }
-      
+
       putBack();
       getOut();
-    } else { }
+    }
+    else
+    {
+    }
   }
 }
 
@@ -282,47 +408,57 @@ void robot::inSorting() {
   - Case 3 checks to see if there are black and white cups (everything else)
   - Default checks to see if there are no cups (the robot goes back and looks for cups)
    ---------------------------------------------------------------------------*/
-void robot::grabCup() {
+void robot::grabCup()
+{
   byte speed = 100;
   ultrasonicRead();
   readCupIR();
-  if (centimeters < 7 && centimeters > 0) {
-    switch (cupColor) {
-      case 1:
+  if (centimeters < 7 && centimeters > 0)
+  {
+    switch (cupColor)
+    {
+    case 1:
+      clawClose(200);
+      cupState = 1; // for grab_N_Lift
+      break;
+
+    case 2: // white cup
+      if (lap == 2)
+      {
         clawClose(200);
-        cupState = 1;   // for grab_N_Lift
-        break;
+        cupState = 1;
+      }
+      else
+      {
+        backward(speed);
+        myDelay(200);
+        goBack();
+      }
+      break;
 
-      case 2:    // white cup
-        if (lap == 2) {
-          clawClose(200);
-          cupState = 1;
-        } else {
-          backward(speed);
-          myDelay(200);
-          goBack();
-        }
-        break;
-
-      case 3:
-        //Black & White cup
-        if (lap == 3) {
-          clawClose(200);
-          cupState = 1;
-        } else {
-          backward(speed);
-          myDelay(200);
-          goBack();
-        }
-        break;
+    case 3:
+      //Black & White cup
+      if (lap == 3)
+      {
+        clawClose(200);
+        cupState = 1;
+      }
+      else
+      {
+        backward(speed);
+        myDelay(200);
+        goBack();
+      }
+      break;
     }
-  } else {
+  }
+  else
+  {
     ultrasonicRead();
     readCupIR();
     goBack();
     ReadIR();
-  } 
-
+  }
 }
 
 /*
@@ -337,9 +473,11 @@ void robot::grabCup() {
   - The claw opens for 1 sec
   - This function is executed after the grab cup function is executed
    ---------------------------------------------------------------------------*/
-void robot::grab_N_LiftCup() {
+void robot::grab_N_LiftCup()
+{
   grabCup();
-  if (cupState == 1) {
+  if (cupState == 1)
+  {
     elbow.close();
     myDelay(1500);
     elbow.stop();
@@ -352,142 +490,171 @@ void robot::grab_N_LiftCup() {
     elbowState = 0;
     cupState = 0;
     readCupIR();
-
-  } else {
+  }
+  else
+  {
     cupState = 0;
     readCupIR();
     ultrasonicRead();
-
   }
 }
 
-void robot::goBack() {
+void robot::goBack()
+{
   ReadIR();
-  while (rightS == 0) {
+  while (rightS == 0)
+  {
     turnRight();
     ReadIR();
   }
-  lineSpeed = 180;
+  stop();
+  myDelay(5);
+  lineSpeed = newSpeed;
 }
 
-void robot::junction() {
-  switch (counter) {
-    case 1:
-      jCount();
-      inSorting();
+void robot::junction()
+{
+  switch (counter)
+  {
+  case 1:
+    jCount();
+    inSorting();
+    ReadIR();
+
+    while (jIR == 0)
+    {
+      forward(lineSpeed);
       ReadIR();
-
-      while (jIR == 0) {
-        forward(lineSpeed);
-        ReadIR();
-      } 
-      stop();
-      myDelay(5);
-      while (centerS == 1) {
-        turnRight();
-        ReadIR();
-      }
-      stop();
-      myDelay(5);
-
-      while (centerS == 0) {
-        turnRight();
-        ReadIR();
-      }
-      stop();
-      myDelay(5);
-      lineSpeed = 100;
-      break;      // follow main line, hit 111 go to right junction and go back
-    
-    case 2:
-      lineSpeed = 100;
-      while(centerS == 1) {
-        forward(lineSpeed);
-        ReadIR();  
-      }
-      
-      myDelay(5);
+    }
+    stop();
+    myDelay(5);
+    while (centerS == 1)
+    {
+      turnRight();
       ReadIR();
-      
-      break;    // while going back from the 1st junction, ignore 111
-      
-    case 3:
+    }
+    stop();
+    myDelay(5);
+
+    while (centerS == 0)
+    {
+      turnRight();
       ReadIR();
-      while (jIR == 0) {
-        forward(lineSpeed);
-        ReadIR();
-      } 
-      stop();
-      myDelay(5);
-      while (centerS == 1) {
-        turnLeft();
-        ReadIR();
-      }
-      stop();
-      myDelay(5);
+    }
+    stop();
+    myDelay(5);
+    lineSpeed = 100;
+    break; // follow main line, hit 111 go to right junction and go back
 
-      while (centerS == 0) {
-        turnLeft();
-        ReadIR();
-      }
-      stop();
-      myDelay(5);
-      counter = 0;
-      lineSpeed = 180;
+  case 2:
+    lineSpeed = 100;
+    while (centerS == 1)
+    {
+      forward(lineSpeed);
+      ReadIR();
+    }
 
-      break;          // While going back from the 2 junction, turnLeft for main line
+    myDelay(5);
+    ReadIR();
+
+    break; // while going back from the 1st junction, ignore 111
+
+  case 3:
+    ReadIR();
+    while (jIR == 0)
+    {
+      forward(lineSpeed);
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+    while (centerS == 1)
+    {
+      turnLeft();
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+
+    while (centerS == 0)
+    {
+      turnLeft();
+      ReadIR();
+    }
+    stop();
+    myDelay(5);
+    counter = 0;
+    lineSpeed = newSpeed;
+
+    break; // While going back from the 2 junction, turnLeft for main line
   }
 }
 
-void robot::followLine() {
+void robot::followLine()
+{
   ReadIR();
-  while(leftS == 0 && centerS == 1 && rightS == 0) {
+  while (leftS == 0 && centerS == 1 && rightS == 0)
+  {
     forward(lineSpeed);
     ReadIR();
   }
   stop();
   myDelay(5);
-  while (leftS == 0 && centerS == 0 && rightS == 1) {
+  while (leftS == 0 && centerS == 0 && rightS == 1)
+  {
     turnRight();
     ReadIR();
   }
-  while (leftS == 0 && centerS == 1 && rightS == 1) {
+  while (leftS == 0 && centerS == 1 && rightS == 1)
+  {
     turnRight();
     ReadIR();
   }
   stop();
   myDelay(5);
-  while (leftS == 1 && centerS == 1 && rightS == 0) {
+  while (leftS == 1 && centerS == 1 && rightS == 0)
+  {
     turnLeft();
     ReadIR();
   }
   stop();
   myDelay(5);
-  while (leftS == 1 && centerS == 0 && rightS == 0) {
+  while (leftS == 1 && centerS == 0 && rightS == 0)
+  {
     turnLeft();
     ReadIR();
   }
   stop();
   myDelay(5);
-  if (leftS == 1 && centerS == 1 && rightS == 1) {
+  if (leftS == 1 && centerS == 1 && rightS == 1)
+  {
     counter++;
-    if (juncState == true) {
+    Serial.print("Counter: ");
+    Serial.println(counter);
+    if (juncState == true)
+    {
       junction();
     }
     ReadIR();
   }
-  if (leftS == 0 && centerS == 0 && rightS == 0) {
+  if (leftS == 0 && centerS == 0 && rightS == 0)
+  {
     stop();
     readCupIR();
     myDelay(500);
     ultrasonicRead();
     grab_N_LiftCup();
-    
-    if (counter == 1) {
+
+    if (counter == 1)
+    {
+      readCupIR();
       junctionArr[juncNum - 1][0] = cupColor;
       readCupIR();
       ReadIR();
-    } else if (counter == 2) {
+    }
+    else if (counter == 2)
+    {
+      readCupIR();
       junctionArr[juncNum - 1][1] = cupColor;
       readCupIR();
       ReadIR();
@@ -496,13 +663,38 @@ void robot::followLine() {
   }
 }
 
-void robot::printArr() {
-  for (int i = 0; i < juncMax; i++) {
+void robot::printArr()
+{
+  for (int i = 0; i < juncMax; i++)
+  {
 
-    for (int j = 0; j < subJunc; j++) {
+    for (int j = 0; j < subJunc; j++)
+    {
       Serial.print(junctionArr[i][j]);
       Serial.print(' ');
     }
     Serial.println();
   }
 }
+
+/*
+void robot::junctionStatus()
+{
+  for (int i = 0; i < juncMax; i++)
+  {
+    for (int i = 0; i < subJunc; i++)
+    {
+      if (j == 0) {
+        forward(lineSpeed);
+        myDelay(100);
+      }
+      else if (j == 2) {
+        hardRight();
+      }
+      else if (j == 3) {
+        hardLeft();
+      }
+    }
+  }
+}
+*/
