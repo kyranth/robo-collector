@@ -64,6 +64,7 @@ void robot::begin()
   claw.open();
   myDelay(1500);
   claw.stop();
+  cupColor = 1;
   lap = 1;
   Serial.println("Robot Ready");
 }
@@ -283,9 +284,10 @@ void robot::inSorting()
   {
     juncState = false;
     ReadIR();
-    while (centerS == 1)
+    while (counter == 1)
     {
       forward(lineSpeed);
+      myDelay(100);
       ReadIR();
     }
     stop();
@@ -301,14 +303,14 @@ void robot::inSorting()
   }
   else if (juncNum == (juncMax + 1) && whiteCup > 0)
   {
-    juncState = false;
     if (counter == 1)
     {
       // directions
       juncState = false;
-      while (rightS == 0)
+      while (counter == 1)
       {
         forward(lineSpeed);
+        myDelay(100);
         ReadIR();
       }
       stop();
@@ -316,35 +318,12 @@ void robot::inSorting()
 
       if (counter == 2)
       {
-        while (jIR == 0)
-        {
-          forward(lineSpeed);
-          ReadIR();
-        }
-        stop();
-        myDelay(5);
-        while (centerS == 1)
-        {
-          turnRight();
-          ReadIR();
-        }
-        stop();
-        myDelay(5);
-        while (centerS == 0)
-        {
-          turnRight();
-          ReadIR();
-        }
-        stop();
-        myDelay(5);
+        hardRight();
+        ReadIR();
       }
-
       putBack();
+      counter = 0;
       getOut();
-      lap = 3;
-    }
-    else
-    {
     }
   }
   else if (juncNum == (juncMax + 1) && black_N_whiteCup > 0)
@@ -353,46 +332,22 @@ void robot::inSorting()
     {
       // directions
       juncState = false;
-      while (leftS == 0)
+      while (counter == 1)
       {
         forward(lineSpeed);
+        myDelay(100);
         ReadIR();
       }
       stop();
       myDelay(5);
-
       if (counter == 2)
       {
+        hardLeft();
         ReadIR();
-        while (jIR == 0)
-        {
-          forward(lineSpeed);
-          ReadIR();
-        }
-        stop();
-        myDelay(5);
-        while (centerS == 1)
-        {
-          turnLeft();
-          ReadIR();
-        }
-        stop();
-        myDelay(5);
-
-        while (centerS == 0)
-        {
-          turnLeft();
-          ReadIR();
-        }
-        stop();
-        myDelay(5);
       }
-
       putBack();
+      counter = 0;
       getOut();
-    }
-    else
-    {
     }
   }
 }
