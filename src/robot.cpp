@@ -10,6 +10,7 @@ byte lineSpeed = 160;
 byte newSpeed = 160;
 const int juncMax = 2, subJunc = 2;
 int junctionArr[juncMax][subJunc];
+byte lap = 1;
 
 byte leftS = 1,
      centerS = 1,
@@ -146,29 +147,29 @@ void robot::turnLeft()
 void robot::hardLeft()
 {
   while (jIR == 0)
-    {
-      forward(lineSpeed);
-      ReadIR();
-    }
-    stop();
-    myDelay(5);
-    while (centerS == 1)
-    {
-      turnLeft();
-      ReadIR();
-    }
-    stop();
-    myDelay(5);
+  {
+    forward(lineSpeed);
+    ReadIR();
+  }
+  stop();
+  myDelay(5);
+  while (centerS == 1)
+  {
+    turnLeft();
+    ReadIR();
+  }
+  stop();
+  myDelay(5);
 
-    while (centerS == 0)
-    {
-      turnLeft();
-      ReadIR();
-    }
-    stop();
-    myDelay(5);
-    counter = 0;
-    lineSpeed = newSpeed;
+  while (centerS == 0)
+  {
+    turnLeft();
+    ReadIR();
+  }
+  stop();
+  myDelay(5);
+  counter = 0;
+  lineSpeed = newSpeed;
 }
 
 void robot::stop()
@@ -209,7 +210,9 @@ void robot::readCupIR()
     // go to everything else
     cupColor = 3;
     black_N_whiteCup++;
-  } else {
+  }
+  else
+  {
     cupColor = 0;
   }
 }
@@ -644,21 +647,22 @@ void robot::followLine()
     myDelay(500);
     ultrasonicRead();
     grab_N_LiftCup();
+    if (lap == 1)
+    {
+      if (counter == 1 && juncState == true)
+      {
+        readCupIR();
+        junctionArr[juncNum - 1][0] = cupColor;
+        ReadIR();
+      }
+      else if (counter == 2 && juncState == true)
+      {
+        readCupIR();
+        junctionArr[juncNum - 1][1] = cupColor;
+        ReadIR();
+      }
+    }
 
-    if (counter == 1)
-    {
-      readCupIR();
-      junctionArr[juncNum - 1][0] = cupColor;
-      readCupIR();
-      ReadIR();
-    }
-    else if (counter == 2)
-    {
-      readCupIR();
-      junctionArr[juncNum - 1][1] = cupColor;
-      readCupIR();
-      ReadIR();
-    }
     ReadIR();
   }
 }
@@ -677,24 +681,25 @@ void robot::printArr()
   }
 }
 
-/*
 void robot::junctionStatus()
 {
   for (int i = 0; i < juncMax; i++)
   {
-    for (int i = 0; i < subJunc; i++)
+    for (int j = 0; j < subJunc; j++)
     {
-      if (j == 0) {
+      if (j == 0)
+      {
         forward(lineSpeed);
         myDelay(100);
       }
-      else if (j == 2) {
+      else if (j == 2)
+      {
         hardRight();
       }
-      else if (j == 3) {
+      else if (j == 3)
+      {
         hardLeft();
       }
     }
   }
 }
-*/
