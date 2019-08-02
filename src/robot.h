@@ -2,9 +2,9 @@
 #include "sensor.h"
 #include <Arduino.h>
 
-class robot {
+class robot
+{
 private:
-
 public:
 	int counter = 0, centimeters;
 	robot();
@@ -34,5 +34,5 @@ public:
 	void junction();
 	void followLine();
 	void printArr();
-	void junctionStatus();
+	void junctionProtocol();
 };

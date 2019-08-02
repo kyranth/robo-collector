@@ -10,7 +10,6 @@ byte lineSpeed = 160;
 byte newSpeed = 160;
 const int juncMax = 2, subJunc = 2;
 int junctionArr[juncMax][subJunc];
-byte lap = 1;
 
 byte leftS = 1,
      centerS = 1,
@@ -112,6 +111,7 @@ void robot::turnRight()
 
 void robot::hardRight()
 {
+  lineSpeed = 100;
   while (jIR == 0)
   {
     forward(lineSpeed);
@@ -146,6 +146,7 @@ void robot::turnLeft()
 
 void robot::hardLeft()
 {
+  lineSpeed = 100;
   while (jIR == 0)
   {
     forward(lineSpeed);
@@ -238,42 +239,41 @@ void robot::putBack()
 void robot::getOut()
 {
   goBack();
-
   ReadIR();
-  if (counter == 1)
+  switch (cupColor)
   {
-    while (leftS == 0 && centerS == 1 && rightS == 0)
+  case 1:
+    if (counter == 1)
     {
-      forward(lineSpeed);
-      ReadIR();
+      while (counter == 1)
+      {
+        forward(lineSpeed);
+        ReadIR();
+      }
+      stop();
+      myDelay(5);
     }
-    stop();
-    myDelay(5);
-  }
-  if (counter == 2)
-  {
-    while (jIR == 0)
+    if (counter == 2)
     {
-      forward(lineSpeed);
-      ReadIR();
+      hardRight();
+      cupColor = 2;
+      counter = 0;
     }
-    stop();
-    myDelay(5);
-    while (centerS == 1)
+    break;
+  case 2:
+    if (counter == 1)
     {
-      turnRight();
-      ReadIR();
+      hardLeft();
+      if (counter == 2)
+      {
+        hardRight();
+        cupColor = 3;
+        counter = 0;
+      }
     }
-    stop();
-    myDelay(5);
-
-    while (centerS == 0)
-    {
-      turnRight();
-      ReadIR();
-    }
-    stop();
-    myDelay(5);
+    break;
+  default:
+    break;
   }
 }
 
@@ -293,7 +293,6 @@ void robot::inSorting()
 
     putBack();
     printArr();
-    lap = 2;
     counter = 0;
     getOut();
     printArr();
@@ -512,6 +511,7 @@ void robot::goBack()
   }
   stop();
   myDelay(5);
+  ReadIR();
   lineSpeed = newSpeed;
 }
 
@@ -526,6 +526,7 @@ void robot::junction()
 
     while (jIR == 0)
     {
+
       forward(lineSpeed);
       ReadIR();
     }
@@ -556,7 +557,6 @@ void robot::junction()
       forward(lineSpeed);
       ReadIR();
     }
-
     myDelay(5);
     ReadIR();
 
@@ -588,7 +588,6 @@ void robot::junction()
     myDelay(5);
     counter = 0;
     lineSpeed = newSpeed;
-
     break; // While going back from the 2 junction, turnLeft for main line
   }
 }
@@ -633,11 +632,15 @@ void robot::followLine()
   {
     counter++;
     Serial.print("Counter: ");
-    Serial.println(counter);
-    if (juncState == true)
+    if (lap == 1 && juncState == true)
     {
       junction();
     }
+    else
+    {
+      junctionProtocol();
+    }
+    Serial.println(counter);
     ReadIR();
   }
   if (leftS == 0 && centerS == 0 && rightS == 0)
@@ -671,7 +674,6 @@ void robot::printArr()
 {
   for (int i = 0; i < juncMax; i++)
   {
-
     for (int j = 0; j < subJunc; j++)
     {
       Serial.print(junctionArr[i][j]);
@@ -681,25 +683,59 @@ void robot::printArr()
   }
 }
 
-void robot::junctionStatus()
+void robot::junctionProtocol()
 {
-  for (int i = 0; i < juncMax; i++)
+  juncNum++;
+  Serial.print("Junction: ");
+  Serial.println(juncNum);
+  switch (lap)
   {
-    for (int j = 0; j < subJunc; j++)
+  case 2:
+    if (junctionArr[juncNum - 1][0] == 2 && junctionArr[juncNum - 1][1] == 2)
     {
-      if (j == 0)
-      {
-        forward(lineSpeed);
-        myDelay(100);
-      }
-      else if (j == 2)
-      {
-        hardRight();
-      }
-      else if (j == 3)
-      {
-        hardLeft();
-      }
+      juncState = true;
+      Serial.println("Call Junction");
     }
+    else if (junctionArr[juncNum - 1][1] == 2)
+    {
+      hardLeft();
+      Serial.println("Hard Left and grab cup");
+    }
+    else if (junctionArr[juncNum - 1][0] == 2)
+    {
+      hardRight();
+      Serial.println("Hard Right and grab cup");
+    }
+    else
+    {
+      forward(lineSpeed);
+      myDelay(100);
+      Serial.println("Pass though");
+    }
+    break;
+
+  case 3:
+    if (junctionArr[juncNum - 1][0] == 3 && junctionArr[juncNum - 1][1] == 3)
+    {
+      juncState = true;
+      Serial.println("Call Junction");
+    }
+    else if (junctionArr[juncNum - 1][1] == 3)
+    {
+      hardLeft();
+      Serial.println("Hard Left and grab cup");
+    }
+    else if (junctionArr[juncNum - 1][0] == 3)
+    {
+      hardRight();
+      Serial.println("Hard Right and grab cup");
+    }
+    else
+    {
+      forward(lineSpeed);
+      myDelay(100);
+      Serial.println("Pass though");
+    }
+    break;
   }
 }
