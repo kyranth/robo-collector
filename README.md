@@ -1,6 +1,7 @@
 # vexSRC
 
-- Author : K-084, lenakhoshrof, jnk344
+- Author : K-084
+- Contributors: Dongdong Liu, lenakhoshrof, jnk344
 - Main purpose : iTEST Activity
 - Copyright (c) holder : All rights reserved (c)
 - License : NYU Tandon School of Engineering: iTEST Program

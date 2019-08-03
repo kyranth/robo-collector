@@ -386,7 +386,7 @@ void robot::grabCup()
       forward(lineSpeed);
       ReadIR();
       ultrasonicRead();
-      Serial.println("5- 13");
+      Serial.println("5- 15");
     }
     stop();
     while (centimeters > 0 && centimeters <= 5)
@@ -395,11 +395,12 @@ void robot::grabCup()
       ReadIR();
       ultrasonicRead();
       readCupIR();
-      Serial.println("5- 13");
+      Serial.println("0- 5");
       break;
     }
     stop();
     myDelay(5);
+
     switch (cupColor)
     {
     case 1:
