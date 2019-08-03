@@ -6,15 +6,16 @@ class robot
 {
 private:
 public:
-	int counter = 0, centimeters;
+	int counter = 0;
+	float centimeters;
 	robot();
 	void myDelay(unsigned long del);
 	void begin();
 	void jCount();
 	void clawOpen(int interval);
 	void clawClose(int interval);
-	void forward(int driveSpeed);
-	void backward(int driveSpeed);
+	void forward(byte driveSpeed);
+	void backward(byte driveSpeed);
 	void turnLeft();
 	void hardLeft();
 	void turnRight();
@@ -35,4 +36,6 @@ public:
 	void followLine();
 	void printArr();
 	void junctionProtocol();
+	void dropNlap();
+	void manualControl();
 };

@@ -5,8 +5,8 @@
  * - License              : iTEST 
  * - Date                 : 07/26/2019
  * ***********************************************************************************************************************************************************************/
- 
- /*********************************** NOTE **************************************/
+
+/*********************************** NOTE **************************************/
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 
@@ -20,7 +20,6 @@
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED
-
 
 /*
     Scorpion(Clawbot)
@@ -36,22 +35,18 @@
 
  */
 
-
 #include "motor.h"
 #include "sensor.h"
 #include "robot.h"
 
-
 robot scorpion;
 
-void setup () {
+void setup()
+{
   scorpion.begin();
-
 }
 
-
-void loop() {
+void loop()
+{
   scorpion.followLine();
-
 }
-
