@@ -12,23 +12,14 @@ byte newSpeed = 180;
 const byte juncMax = 6, subJunc = 2;
 byte junctionArr[juncMax][subJunc];
 
-byte leftS = 1,
-     centerS = 1,
-     rightS = 1,
-     jIR = 1;
+byte leftS = 1, centerS = 1, rightS = 1, jIR = 1;
 byte cupleftIR = 1, cuprightIR = 1;
 byte rightCup = 0, leftCup = 0;
-byte juncNum = 0,
-     lap = 0;
+byte juncNum = 0, lap = 0;
 
-byte cupColor = 0,
-     blackCup = 0,
-     whiteCup = 0,
-     black_N_whiteCup = 0;
+byte cupColor = 0, blackCup = 0, whiteCup = 0, black_N_whiteCup = 0;
 
-byte clawState,
-    cupState,
-    elbowState;
+byte clawState, cupState, elbowState;
 
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
@@ -77,7 +68,7 @@ void robot::begin()
 void robot::jCount()
 {
   juncNum++;
-  Serial.println(juncNum);
+  // Serial.println(juncNum);
 }
 
 void robot::clawOpen(int interval)
