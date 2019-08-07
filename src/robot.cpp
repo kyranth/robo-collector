@@ -1,9 +1,5 @@
 #include "robot.h"
-#include "motor.h"
-#include "sensor.h"
-#include <Arduino.h>
-#include <HCSR04.h>
-#include <IRremote.h>
+#include "configuration.h"
 
 // Configuration
 bool juncState;
@@ -18,27 +14,6 @@ byte rightCup = 0, leftCup = 0;
 byte juncNum = 0, lap = 0;
 
 byte cupColor = 0, blackCup = 0, whiteCup = 0, black_N_whiteCup = 0;
-
-byte clawState, cupState, elbowState;
-
-motor leftMotor(10, 9); // CW, CCW
-motor rightMotor(6, 5);
-motor elbow(2, 4);
-motor claw(7, 8);
-
-sensor leftIR(A0);
-sensor centerIR(A1);
-sensor rightIR(A2);
-sensor junctionIR(A5);
-sensor cupSensorRight(11);
-sensor cupSensorLeft(12);
-
-UltraSonicDistanceSensor distanceSensor(A4, A3);
-
-const byte RECV_PIN = 3;
-IRrecv irrecv(RECV_PIN);
-decode_results results;
-unsigned long key_value = 0;
 
 robot::robot() {}
 
@@ -71,41 +46,6 @@ void robot::jCount()
   // Serial.println(juncNum);
 }
 
-void robot::clawOpen(int interval)
-{
-  claw.open();
-  myDelay(interval);
-  claw.stop();
-  clawState = 0;
-}
-
-void robot::clawClose(int interval)
-{
-  claw.close();
-  myDelay(interval);
-  claw.stop();
-  clawState = 1;
-}
-
-void robot::forward(byte driveSpeed)
-{
-  leftMotor.forward(driveSpeed);
-  rightMotor.forward(driveSpeed);
-}
-
-void robot::backward(byte driveSpeed)
-{
-  leftMotor.backward(driveSpeed);
-  rightMotor.backward(driveSpeed);
-}
-
-void robot::turnRight()
-{
-  byte speed = 180;
-  leftMotor.forward(speed);
-  rightMotor.backward(speed);
-}
-
 void robot::hardRight()
 {
   lineSpeed = 100;
@@ -132,13 +72,6 @@ void robot::hardRight()
   stop();
   myDelay(5);
   lineSpeed = 100;
-}
-
-void robot::turnLeft()
-{
-  byte speed = 180;
-  leftMotor.backward(speed);
-  rightMotor.forward(speed);
 }
 
 void robot::hardLeft()
@@ -168,12 +101,6 @@ void robot::hardLeft()
   myDelay(5);
   counter = 0;
   lineSpeed = newSpeed;
-}
-
-void robot::stop()
-{
-  leftMotor.stop();
-  rightMotor.stop();
 }
 
 //****************************************************************************************************************************************************
