@@ -13,7 +13,7 @@
 // * Redistributions of source code must retain the above copyright notice, this
 //  list of conditions and the following disclaimer.
 
-// * Redistributions in binary form must reproduce the above copyright notice, 
+// * Redistributions in binary form must reproduce the above copyright notice,
 //  this list of conditions and the following disclaimer in the documentation
 //  and/or other materials provided with the distribution.
 
@@ -22,7 +22,7 @@
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED
 
 /*
-
+ 
   * Scorpion(Clawbot)
   *  TEAM: {
   *    Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nischal Thapa
