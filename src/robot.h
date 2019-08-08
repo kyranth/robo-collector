@@ -1,14 +1,20 @@
 #include <Arduino.h>
+#include "motor.h"
 
 class robot
 {
-private:
 public:
 	int counter = 0;
 	float centimeters;
+	byte leftS = 1, centerS = 1, rightS = 1, jIR = 1;
+	byte cupleftIR = 1, cuprightIR = 1;
+	byte rightCup = 0, leftCup = 0;
+	byte juncNum = 0, lap = 0;
+	byte clawState, cupState, elbowState;
+	byte cupColor = 0, blackCup = 0, whiteCup = 0, black_N_whiteCup = 0;
 	robot();
 	void myDelay(unsigned long del);
-	void begin();
+	void initiate();
 	void jCount();
 	void clawOpen(int interval);
 	void clawClose(int interval);

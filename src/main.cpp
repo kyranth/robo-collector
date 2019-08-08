@@ -36,15 +36,13 @@
 
 */
 
-#include "motor.h"
-#include "sensor.h"
 #include "robot.h"
 
 robot scorpion;
 
 void setup()
 {
-  scorpion.begin();
+  scorpion.initiate();
 }
 
 void loop()

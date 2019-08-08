@@ -12,15 +12,6 @@ byte newSpeed = 180;
 const byte juncMax = 6, subJunc = 2;
 byte junctionArr[juncMax][subJunc];
 
-byte leftS = 1, centerS = 1, rightS = 1, jIR = 1;
-byte cupleftIR = 1, cuprightIR = 1;
-byte rightCup = 0, leftCup = 0;
-byte juncNum = 0, lap = 0;
-
-byte cupColor = 0, blackCup = 0, whiteCup = 0, black_N_whiteCup = 0;
-
-byte clawState, cupState, elbowState;
-
 motor leftMotor(10, 9); // CW, CCW
 motor rightMotor(6, 5);
 motor elbow(2, 4);
@@ -32,7 +23,6 @@ sensor rightIR(A2);
 sensor junctionIR(A5);
 sensor cupSensorRight(11);
 sensor cupSensorLeft(12);
-
 UltraSonicDistanceSensor distanceSensor(A4, A3);
 
 const byte RECV_PIN = 3;
@@ -42,14 +32,7 @@ unsigned long key_value = 0;
 
 robot::robot() {}
 
-void robot::myDelay(unsigned long del)
-{
-  unsigned long myPrevMillis = millis();
-  while (millis() - myPrevMillis <= del)
-    ;
-}
-
-void robot::begin()
+void robot::initiate()
 {
   Serial.begin(9600);
   pinMode(13, OUTPUT);
@@ -65,10 +48,23 @@ void robot::begin()
   Serial.println("Robot Ready");
 }
 
-void robot::jCount()
+void robot::myDelay(unsigned long del)
 {
-  juncNum++;
-  // Serial.println(juncNum);
+  unsigned long myPrevMillis = millis();
+  while (millis() - myPrevMillis <= del)
+    ;
+}
+
+void robot::forward(byte driveSpeed)
+{
+  leftMotor.forward(driveSpeed);
+  rightMotor.forward(driveSpeed);
+}
+
+void robot::backward(byte driveSpeed)
+{
+  leftMotor.backward(driveSpeed);
+  rightMotor.backward(driveSpeed);
 }
 
 void robot::clawOpen(int interval)
@@ -87,23 +83,32 @@ void robot::clawClose(int interval)
   clawState = 1;
 }
 
-void robot::forward(byte driveSpeed)
-{
-  leftMotor.forward(driveSpeed);
-  rightMotor.forward(driveSpeed);
-}
-
-void robot::backward(byte driveSpeed)
-{
-  leftMotor.backward(driveSpeed);
-  rightMotor.backward(driveSpeed);
-}
-
 void robot::turnRight()
 {
   byte speed = 180;
   leftMotor.forward(speed);
   rightMotor.backward(speed);
+}
+
+void robot::turnLeft()
+{
+  byte speed = 180;
+  leftMotor.backward(speed);
+  rightMotor.forward(speed);
+}
+
+void robot::stop()
+{
+  leftMotor.stop();
+  rightMotor.stop();
+}
+
+//**************************************************************************************************
+
+void robot::jCount()
+{
+  juncNum++;
+  // Serial.println(juncNum);
 }
 
 void robot::hardRight()
@@ -134,13 +139,6 @@ void robot::hardRight()
   lineSpeed = 100;
 }
 
-void robot::turnLeft()
-{
-  byte speed = 180;
-  leftMotor.backward(speed);
-  rightMotor.forward(speed);
-}
-
 void robot::hardLeft()
 {
   lineSpeed = 100;
@@ -169,14 +167,6 @@ void robot::hardLeft()
   counter = 0;
   lineSpeed = newSpeed;
 }
-
-void robot::stop()
-{
-  leftMotor.stop();
-  rightMotor.stop();
-}
-
-//****************************************************************************************************************************************************
 
 void robot::ReadIR()
 {
