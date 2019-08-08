@@ -22,7 +22,7 @@
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED
 
 /*
- 
+
   * Scorpion(Clawbot)
   *  TEAM: {
   *    Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nischal Thapa
