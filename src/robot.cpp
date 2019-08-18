@@ -38,11 +38,11 @@ void robot::initiate()
   pinMode(13, OUTPUT);
   irrecv.enableIRIn();
   irrecv.blink13(true);
-  juncState = true;
   Serial.println("Initiating Matrix...");
   printArr();
   clawClose(500);
   clawOpen(600);
+  juncState = true;
   cupColor = 1;
   lap = 1;
   Serial.println("Robot Ready");
