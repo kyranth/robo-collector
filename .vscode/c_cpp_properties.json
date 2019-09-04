@@ -9,8 +9,8 @@
             "includePath": [
                 "/Users/k084/Documents/Repositories/VexSRC/include",
                 "/Users/k084/Documents/Repositories/VexSRC/src",
-                "/Users/k084/.platformio/lib/IRremote",
                 "/Users/k084/.platformio/lib/HCSR04-1.0.0/src",
+                "/Users/k084/.platformio/lib/IRremote",
                 "/Users/k084/.platformio/packages/framework-arduinoavr/cores/arduino",
                 "/Users/k084/.platformio/packages/framework-arduinoavr/variants/standard",
                 "/Users/k084/.platformio/lib/Adafruit_Circuit_Playground",
@@ -36,12 +36,11 @@
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": "${workspaceRoot}/.vscode/.browse.c_cpp.db",
                 "path": [
                     "/Users/k084/Documents/Repositories/VexSRC/include",
                     "/Users/k084/Documents/Repositories/VexSRC/src",
-                    "/Users/k084/.platformio/lib/IRremote",
                     "/Users/k084/.platformio/lib/HCSR04-1.0.0/src",
+                    "/Users/k084/.platformio/lib/IRremote",
                     "/Users/k084/.platformio/packages/framework-arduinoavr/cores/arduino",
                     "/Users/k084/.platformio/packages/framework-arduinoavr/variants/standard",
                     "/Users/k084/.platformio/lib/Adafruit_Circuit_Playground",
@@ -67,7 +66,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=40000",
+                "PLATFORMIO=40003",
                 "ARDUINO_AVR_UNO",
                 "F_CPU=16000000L",
                 "ARDUINO_ARCH_AVR",

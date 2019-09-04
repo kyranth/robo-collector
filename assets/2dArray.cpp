@@ -1,8 +1,4 @@
 /*
-  
-
-
-
     97 a -> juncNum++
     98 b -> arr[x][0] = 1/2/3
     99 c -> arr[x][1] = 1/2/3
@@ -192,7 +188,7 @@ void loop()
       break;
     }
 
-    // // say what you got:
+    // say what you got:
     // Serial.print("I received: ");
     // Serial.println(incomingByte, DEC);
   }
