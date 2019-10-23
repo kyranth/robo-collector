@@ -400,8 +400,7 @@ void robot::grabCup()
       goBack();
       break;
 
-    case 3:
-      //Black & White cup
+    case 3: //Black & White cup
       if (lap == 3)
       {
         clawClose(200);
@@ -735,6 +734,7 @@ void robot::manualControl()
     Serial.println("3");
     break;
   case 0xFF10EF:
+    grab_N_LiftCup();
     Serial.println("4");
     break;
   case 0xFF38C7:
@@ -750,6 +750,7 @@ void robot::manualControl()
     Serial.println("8");
     break;
   case 0xFF52AD:
+    followLine();
     Serial.println("9");
     break;
   default:

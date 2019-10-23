@@ -47,5 +47,5 @@ void setup()
 
 void loop()
 {
-  scorpion.followLine();
+  scorpion.manualControl();
 }
