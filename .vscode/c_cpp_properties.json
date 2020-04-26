@@ -13,6 +13,11 @@
                 "/Users/k084/.platformio/lib/HCSR04-1.0.0/src",
                 "/Users/k084/.platformio/packages/framework-arduinoavr/cores/arduino",
                 "/Users/k084/.platformio/packages/framework-arduinoavr/variants/standard",
+                "/Users/k084/Documents/Arduino/libraries/Adafruit_GFX_Library",
+                "/Users/k084/Documents/Arduino/libraries/Adafruit_SSD1306",
+                "/Users/k084/Documents/Arduino/libraries/ardumidi",
+                "/Users/k084/.platformio/lib/Adafruit GFX Library_ID13",
+                "/Users/k084/.platformio/lib/Adafruit SSD1306_ID135",
                 "/Users/k084/.platformio/lib/Adafruit_Circuit_Playground",
                 "/Users/k084/.platformio/lib/Adafruit_Circuit_Playground/utility",
                 "/Users/k084/.platformio/lib/Adafruit_DMA_neopixel_library",
@@ -43,6 +48,11 @@
                     "/Users/k084/.platformio/lib/HCSR04-1.0.0/src",
                     "/Users/k084/.platformio/packages/framework-arduinoavr/cores/arduino",
                     "/Users/k084/.platformio/packages/framework-arduinoavr/variants/standard",
+                    "/Users/k084/Documents/Arduino/libraries/Adafruit_GFX_Library",
+                    "/Users/k084/Documents/Arduino/libraries/Adafruit_SSD1306",
+                    "/Users/k084/Documents/Arduino/libraries/ardumidi",
+                    "/Users/k084/.platformio/lib/Adafruit GFX Library_ID13",
+                    "/Users/k084/.platformio/lib/Adafruit SSD1306_ID135",
                     "/Users/k084/.platformio/lib/Adafruit_Circuit_Playground",
                     "/Users/k084/.platformio/lib/Adafruit_Circuit_Playground/utility",
                     "/Users/k084/.platformio/lib/Adafruit_DMA_neopixel_library",
@@ -66,7 +76,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=40100",
+                "PLATFORMIO=40301",
                 "ARDUINO_AVR_UNO",
                 "F_CPU=16000000L",
                 "ARDUINO_ARCH_AVR",
@@ -77,7 +87,11 @@
             "intelliSenseMode": "clang-x64",
             "cStandard": "c11",
             "cppStandard": "c++11",
-            "compilerPath": "\"/Users/k084/.platformio/packages/toolchain-atmelavr/bin/avr-gcc\" -mmcu=atmega328p"
+            "compilerPath": "/Users/k084/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
         }
     ],
     "version": 4
