@@ -1,4 +1,4 @@
-# vexSRC
+# Robo-Collector
 
 - Author : K-084
 - Contributors: Dongdong Liu, lenakhoshrof, jnk344
