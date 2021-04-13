@@ -1,15 +1,16 @@
 #include "motor.h"
 #include "Arduino.h"
 
-motor::motor(int CW, int CCW) {
-  // _CW - inuput = defined variable
+motor::motor(int CW, int CCW)
+{
   _CW = CW;
   _CCW = CCW;
   pinMode(CW, OUTPUT);
   pinMode(CCW, OUTPUT);
 }
 
-void motor::backward(int driveSpeed) {
+void motor::backward(int driveSpeed)
+{
   analogWrite(_CW, LOW);
   analogWrite(_CCW, driveSpeed);
   //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
@@ -17,7 +18,8 @@ void motor::backward(int driveSpeed) {
   //delay(10);
 }
 
-void motor::forward(int driveSpeed) {
+void motor::forward(int driveSpeed)
+{
   analogWrite(_CW, driveSpeed);
   analogWrite(_CCW, LOW);
   //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
@@ -25,17 +27,20 @@ void motor::forward(int driveSpeed) {
   //delay(10);
 }
 
-void motor::open(){
-  digitalWrite(_CW, HIGH);
-  digitalWrite(_CCW, LOW);
-}
-
-void motor::close() {
+void motor::open()
+{
   digitalWrite(_CW, LOW);
   digitalWrite(_CCW, HIGH);
 }
 
-void motor::stop() {
+void motor::close()
+{
+  digitalWrite(_CW, HIGH);
+  digitalWrite(_CCW, LOW);
+}
+
+void motor::stop()
+{
   digitalWrite(_CW, LOW);
   digitalWrite(_CCW, LOW);
   //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN

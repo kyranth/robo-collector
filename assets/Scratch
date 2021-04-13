@@ -1,0 +1,46 @@
+
+
+
+  Serial.println(centimeters);
+  delay(100);
+
+  if(centimeters < 5) {
+    // rad.setColor(200, 0, 0);
+    claw.open();
+
+  } else if (centimeters > 5) {
+    // rad.setColor(0, 200, 0);
+    claw.close();
+    delay(2000);
+    claw.open();
+  }
+
+
+
+  /*
+void robot::setColor(int redValue, int greenValue, int blueValue) {
+  analogWrite(redPin, redValue);
+  analogWrite(greenPin, greenValue);
+  analogWrite(bluePin, blueValue); 
+}
+
+
+int robot::rgbFlash(String color) {
+    if (color == "red") {
+      setColor(200, 0, 0);
+      delay(100);
+      setColor(0, 0, 0);
+      delay(100); 
+    } else if (color == "green") {
+      setColor(0, 200, 0);
+      delay(100);
+      setColor(0, 0, 0);
+      delay(100); 
+    } else if (color == "blue") {
+      setColor(0, 0, 200);
+      delay(100);
+      setColor(0, 0, 0);
+      delay(100);
+    }
+}
+*/

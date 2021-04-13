@@ -1,0 +1,258 @@
+#include "robot.h"
+#include "motor.h"
+#include "sensor.h"
+#include <Arduino.h>
+#include <HCSR04.h>
+
+// Configuration
+int leftS = 1;
+int centerS = 1;
+int rightS = 1;
+
+byte clawState;
+byte cupState;
+int houseNum = 0;
+
+int lineSpeed = 160;
+
+motor leftMotor(10, 9); // CW, CCW
+motor rightMotor(6, 5);
+motor elbow(2, 4);
+motor claw(7, 8);
+
+sensor leftIR(A0);
+sensor centerIR(A1);
+sensor rightIR(A2);
+UltraSonicDistanceSensor distanceSensor(A4, A3);
+
+robot::robot(){
+}
+
+void robot::begin(){
+	Serial.begin(9600);
+	Serial.println("Robot Ready");
+  claw.close();
+  delay(500);
+  claw.open();
+  delay(1500);
+}
+
+void robot::clawOpen() {
+  claw.open();
+  clawState = 0;
+} 
+
+void robot::clawClose () {
+  claw.close();
+  clawState = 1;
+}
+
+void robot::forward(int driveSpeed) {
+  leftMotor.forward(driveSpeed);
+  rightMotor.forward(driveSpeed);
+}
+
+void robot::backward(int driveSpeed) {
+  leftMotor.backward(driveSpeed);
+  rightMotor.backward(driveSpeed);
+}
+
+void robot::turnRight() {
+  leftMotor.forward(200);
+  rightMotor.backward(200);
+}
+
+void robot::turnLeft() {
+  leftMotor.backward(200);
+  rightMotor.forward(200);
+}
+
+void robot::stop() {
+  leftMotor.stop();
+  rightMotor.stop();
+}
+
+//-------------------------------------------------
+
+void robot::ReadIR() {
+  leftS = leftIR.DRead();
+  centerS = centerIR.DRead();
+  rightS = rightIR.DRead();
+}
+
+void robot::isThereCup() {
+  centimeters = distanceSensor.measureDistanceCm();
+  // Serial.println(centimeters);
+  if (centimeters < 7 && centimeters < 0 && clawState == 1) {
+    cupState = 1;
+  } else {
+    cupState = 0;
+  }
+}
+
+void robot::goBack() {
+  ReadIR();
+  while (centerS == 0) {
+    turnRight();
+    ReadIR();
+    
+  }
+
+  if ((houseNum % 2) == 0) {
+       backward(lineSpeed);
+
+  } else {
+
+  }
+}
+
+void robot::grabCup() {
+  centimeters = distanceSensor.measureDistanceCm();
+  Serial.println(centimeters);
+  if (centimeters > 7) {
+    claw.open();
+    delay(1000);
+    goBack();
+   
+  } else if (centimeters < 7 && centimeters > 0) {
+     claw.close();
+     delay(1000);
+     isThereCup();
+     
+  } 
+}
+
+void robot::junction() {
+  int JuncTime = 200;
+  switch (count) {
+    case 1:
+      forward(lineSpeed);
+      delay(JuncTime);
+      stop();
+      ReadIR();
+      while (centerS == 1) {
+        turnRight();
+        ReadIR();
+      } while (centerS == 0) {
+        turnRight();
+        ReadIR(); 
+      }
+
+      isThereCup(); // Check for cup status
+      goBack();
+      break;      // follow main line, hit 111 go to right junction and go back
+    
+    case 2:
+      forward(255);
+      delay(JuncTime);
+      ReadIR();
+      break;    // while going back from the 1st junction, ignore 111
+      
+    case 3:
+      forward(lineSpeed);
+      delay(JuncTime);
+      ReadIR();
+      while (centerS == 1) {
+        turnLeft();
+        ReadIR();
+
+      } while (centerS == 0) {
+        turnLeft();
+        ReadIR();
+        count = 0;  // reset junction count
+      }
+      break;     // While going back from the 2 junction, turnLeft for main line
+
+  }
+}
+
+void robot::followLine() {
+  ReadIR();
+ 
+  if(leftS == 0 && centerS == 1 && rightS == 0) {
+    forward(lineSpeed);
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+      switch (cupState) {
+        case 0:
+
+          forward(lineSpeed);
+          ReadIR();
+          break;
+
+        case 1:
+          count++;
+          junction();
+          ReadIR();
+          break;
+      }
+      ReadIR();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
+      stop();
+      houseNum++;   // update house number for memory
+      delay(1000);
+      grabCup();
+      ReadIR();
+
+  } 
+
+}
+
+void robot::cupCollect() {
+  ReadIR();
+ 
+  if(leftS == 0 && centerS == 1 && rightS == 0) {
+    forward(lineSpeed);
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 1 && rightS == 1) {
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 0) {
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 1) {
+    turnRight();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 0 && rightS == 0) {
+    turnLeft();
+    ReadIR();
+
+  } else if (leftS == 1 && centerS == 1 && rightS == 1) {
+    count++;
+    junction();
+    ReadIR();
+
+  } else if (leftS == 0 && centerS == 0 && rightS == 0) {
+    stop();
+    delay(2000);
+    grabCup();
+    ReadIR();
+
+  }
+}
+
+void robot::sortCup() {
+
+}
