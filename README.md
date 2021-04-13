@@ -1,6 +1,6 @@
 # Robo-Collector
 
-- Author : K-084
+- Author : nick-ar
 - Contributors: Dongdong Liu, lenakhoshrof, jnk344
 - Main purpose : iTEST Activity
 - Copyright (c) holder : All rights reserved (c)
