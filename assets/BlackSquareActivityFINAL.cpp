@@ -4,7 +4,8 @@
    JEFF BOB THE 3RD(Clawbot)
     License: iTEST NYU Robotis Course
     TEAM: {
-      Dr. Walcott, Mr. Kiefer, Shafiqur Khan, Nishal Thapa
+      Dr. Walcott, Mr. Kiefer,
+      Shafiqur Khan, Nishal Thapa
       Lena Khosrof, Yanni, Dushan Persaud
     }
 */
@@ -93,17 +94,17 @@ void setup()
   pinMode(A2, INPUT);
 }
 
-void loop() {
+void loop()
+{
   int centimeters = distanceSensor.measureDistanceCm();
   int inches = centimeters / 2.54;
-  
+
   leftsensor = digitalRead(A2); // Left sensor takes input from Pin 13.
   centersensor = digitalRead(A1);
   rightsensor = digitalRead(A0);
   Serial.print(leftsensor);
   Serial.print(centersensor);
   Serial.print(rightsensor);
-  
 
   if (leftsensor == LOW && centersensor == HIGH && rightsensor == LOW)
   {
@@ -140,9 +141,8 @@ void loop() {
   {
     forward(125);
   }
-
 }
- 
+
 //else
 //{
 //clockwise_rotate(rightangle);
@@ -169,24 +169,20 @@ void loop() {
   clockwise_rotate();
   delay(650); */
 
-
-
-
 // HIGH = black
 // LOW = white
 // left sensor = Pin 11
 // center sensor = Pin 12
 // right sensor = Pin 13
 
-
 // Every 500 miliseconds, do a measurement using the sensor and print the distance in centimeters.
-    Serial.println(distanceSensor.measureDistanceCm());
-    int centimeters = distanceSensor.measureDistanceCm();
-    int inches = centimeters / 2.54;
-    Serial.println(inches);
-    delay(500);
+Serial.println(distanceSensor.measureDistanceCm());
+int centimeters = distanceSensor.measureDistanceCm();
+int inches = centimeters / 2.54;
+Serial.println(inches);
+delay(500);
 
-    if(inches <= 3)
-    {
-      // Close claw motor
-    }
+if (inches <= 3)
+{
+  // Close claw motor
+}
