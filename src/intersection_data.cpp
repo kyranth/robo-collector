@@ -1,11 +1,19 @@
-/*
-    97 a -> juncNum++
-    98 b -> arr[x][0] = 1/2/3
-    99 c -> arr[x][1] = 1/2/3
-    100 d -> arr[x][0] = 1/2/3
-    101 e -> next line printLn arr
-    102 f -> run Junction Protocol
-    102 g -> increment lap 0 - 3
+/**
+ * @file intersection_data.cpp
+ * @brief Implementation of the 2D array for junction tracking
+ * @author kyranth
+ * @date 2019-07-26
+ *
+ * Controls for junction mapping:
+ * - a (97)  : Increment junction number
+ * - b (98)  : Set left junction value (1/2/3)
+ * - c (99)  : Set right junction value (1/2/3)
+ * - e (101) : Print array
+ * - f (102) : Run Junction Protocol
+ * - g (103) : Increment lap (0-3)
+ *
+ * This program stores and manages junction data in a 2D array structure,
+ * tracking both left and right junction values for robot navigation.
 */
 
 #include <Arduino.h>
