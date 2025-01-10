@@ -1,40 +1,17 @@
-/***********************************************************************************                                              
- ** - Author               : Shafiqur Khan, Lena Khoshrof, John (Yanni) Kitsios
- ** - Main purpose         : iTEST Activity                                                                               
- ** - Copyright (c) holder : All rights reserved
- ** - License              : iTEST 
- ** - Date                 : 07/26/2019
- * *******************************************************************************/
-
-/*********************************** NOTE ****************************************/
-//! Redistribution and use in source and binary forms, with or without
-//! modification, are permitted provided that the following conditions are met:
-
-// * Redistributions of source code must retain the above copyright notice, this
-//  list of conditions and the following disclaimer.
-
-// * Redistributions in binary form must reproduce the above copyright notice,
-//  this list of conditions and the following disclaimer in the documentation
-//  and/or other materials provided with the distribution.
-
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED
-
-/*
-
-  * Scorpion(Clawbot)
-  *  TEAM: {
-  *    Dr. Walkot, Mr. Kiefer, Shafiqur Khan, Nischal Thapa
-  *    Lena Khosrof, John (Yanni) Kitsios, Dushan Persaud
-  *  }
-
-*    Configuration:
-*    Left Motor(10, 9)     leftColorSensor(11)       rightColorSensor(13)
-*    Right Motor(6, 6)     centerColorSensor(12)     IRSensor()
-*    ClawMotor(7, 8)       elbowMotor(2, 4)          RGB Led(11, 12, 13)
-
-*/
+/**
+ * @file main.cpp
+ * @brief Main file for the Scorpion robot
+ * @author S Khan, Lena Khoshrof, John (Yanni) Kitsios
+ * @date 2019-07-26
+ *
+ * Pinout configuration on an Arduino Uno:
+ *
+ * Left Motor(10, 9)     leftColorSensor(11)       rightColorSensor(13)
+ * Right Motor(6, 6)     centerColorSensor(12)     IRSensor()
+ * ClawMotor(7, 8)       elbowMotor(2, 4)          RGB Led(11, 12, 13)
+ *
+ * This file contains the main function that initializes the robot and enters the manual control loop.
+ */
 
 #include "robot.h"
 
