@@ -1,3 +1,12 @@
+/**
+ * @file motor.cpp
+ * @brief Implementation of the motor
+ * @author kyranth
+ * @date 2019-07-26
+ *
+ * This file contains the implementation of the motor.
+ */
+
 #include "motor.h"
 #include "Arduino.h"
 
@@ -13,7 +22,6 @@ void motor::backward(int driveSpeed)
 {
   analogWrite(_CW, LOW);
   analogWrite(_CCW, driveSpeed);
-  //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
   //Serial.println("---backward executed---");
   //delay(10);
 }
@@ -22,7 +30,6 @@ void motor::forward(int driveSpeed)
 {
   analogWrite(_CW, driveSpeed);
   analogWrite(_CCW, LOW);
-  //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
   //Serial.println("---forward executed---");
   //delay(10);
 }
@@ -43,7 +50,6 @@ void motor::stop()
 {
   digitalWrite(_CW, LOW);
   digitalWrite(_CCW, LOW);
-  //Debugging Purposes - DO NOT DELETE SERIAL.PRINTLN
   //Serial.println("---stopped---");
   //delay(10);
 }
