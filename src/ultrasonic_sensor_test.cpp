@@ -1,3 +1,13 @@
+/**
+ * @file ultrasonic_sensor_test.cpp
+ * @brief This file contains the implementation for interfacing with an ultrasonic sensor.
+ * @author kyranth
+ * @date 2019-07-26
+ *
+ * This program tests the HCSR04 library to interface with an ultrasonic sensor. The sensor is used to measure the distance between the sensor and an object.
+ */
+
+#include <Arduino.h>
 #include <HCSR04.h>
 
 UltraSonicDistanceSensor distanceSensor(A3, A4);  // Initialize sensor that uses digital pins A3 & A4.
